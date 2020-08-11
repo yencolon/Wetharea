@@ -5,6 +5,9 @@ import { StyleSheet, Text, View } from "react-native";
 // API fetch
 import { weather } from "../api/index";
 
+// Components
+import HourlyCard from '../components/HourlyCard'
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -37,9 +40,7 @@ export default class Home extends Component {
     const { current } = this.state;
     return (
       <View style={styles.container}>
-        <StatusBar style="auto" />
-        <Text> ¡ WETHAREA ! </Text>
-        <Text> {JSON.stringify(current)} </Text>
+        <HourlyCard />
       </View>
     );
   }
@@ -48,7 +49,7 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#2c2c54",
     alignItems: "center",
     justifyContent: "center",
   },
