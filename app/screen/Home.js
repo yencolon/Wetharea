@@ -9,6 +9,9 @@ import CurrentWeatherCard from "../components/CurrentWheterCard";
 // Components
 import WeatherHourly from "../components/WeatherHourly";
 
+// Utils
+import { whichBackground } from "../utils/utils";
+
 export default class Home extends PureComponent {
   constructor(props) {
     super(props);
@@ -39,14 +42,15 @@ export default class Home extends PureComponent {
 
   render() {
     const { current, hourly } = this.state;
+
     return (
       <View style={styles.container}>
-        <ImageBackground source={require('../assets/img/bg.jpg')} style={styles.image}>
+        <ImageBackground source={whichBackground()} style={styles.image}>
           <StatusBar backgroundColor="#20232A" style="light" />
           {/* <View style={styles.titleContainer}>
             <Text style={styles.title}>¡ WETHAREA !</Text>
           </View> */}
-          <CurrentWeatherCard current={current} place='Puerto La Cruz' />
+          <CurrentWeatherCard current={current} place="Puerto La Cruz" />
           <WeatherHourly hourly={hourly} />
         </ImageBackground>
       </View>
@@ -56,12 +60,12 @@ export default class Home extends PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
   titleContainer: {
     flex: 1,
