@@ -1,14 +1,14 @@
 import { StatusBar } from "expo-status-bar";
-import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { PureComponent } from "react";
+import { StyleSheet, ImageBackground, Text, View } from "react-native";
 
 // API fetch
 import { weather } from "../api/index";
 
 // Components
-import HourlyCard from '../components/HourlyCard'
+import WeatherHourly from "../components/WeatherHourly";
 
-export default class Home extends Component {
+export default class Home extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +26,7 @@ export default class Home extends Component {
     try {
       const response = await weather.getWeather(10.21667, -64.61667);
       const { current, hourly, daily } = await response.json();
+   
       this.setState({
         current,
         hourly,
@@ -37,10 +38,16 @@ export default class Home extends Component {
   };
 
   render() {
-    const { current } = this.state;
+    const { current, hourly } = this.state;
     return (
       <View style={styles.container}>
-        <HourlyCard />
+        <ImageBackground source={require('../assets/img/bg.jpg')} style={styles.image}>
+        <StatusBar backgroundColor="#20232A" style="light" />
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>¡ WETHAREA !</Text>
+        </View>
+        <WeatherHourly hourly={hourly} />
+        </ImageBackground>
       </View>
     );
   }
@@ -49,8 +56,20 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2c2c54",
-    alignItems: "center",
+    // backgroundColor: "#2c2c54",
     justifyContent: "center",
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  titleContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    color: "#fff",
   },
 });
