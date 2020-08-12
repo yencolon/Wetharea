@@ -16,17 +16,17 @@ export const getHoursToday = (date) => {
 //Envia el main del objeto weather retorna un simbolo. 
 export const getWeatherIcon = (weather) => {
   switch (weather) {
-      case 'clear': 
+      case 'Clear': 
           return '☀';
-      case 'clouds':
+      case 'Clouds':
           return '☁'
-      case 'rain':
+      case 'Rain':
           return '🌧';
-      case 'thunderstorm':
+      case 'Thunderstorm':
           return '⛈';
-      case 'snow':
+      case 'Snow':
           return '❄';
-      case 'mist': 
+      case 'Mist': 
           return '🌫'
       default: return '☁';
   }
