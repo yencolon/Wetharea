@@ -7,7 +7,7 @@ import { weather } from "../api/index";
 import CurrentWeatherCard from "../components/CurrentWheterCard";
 
 // Components
-import WeatherHourly from "../components/WeatherHourly";
+import HourlyWeather from "../components/HourlyWeather";
 
 // Utils
 import { whichBackground } from "../utils/utils";
@@ -51,7 +51,7 @@ export default class Home extends PureComponent {
             <Text style={styles.title}>¡ WETHAREA !</Text>
           </View> */}
           <CurrentWeatherCard current={current} place="Puerto La Cruz" />
-          <WeatherHourly hourly={hourly} />
+          <HourlyWeather hourly={hourly} />
         </ImageBackground>
       </View>
     );
