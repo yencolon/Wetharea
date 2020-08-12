@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 // API fetch
 import { weather } from "../api/index";
+import CurrentWeatherCard from "../components/CurrentWheterCard";
 
 export default class Home extends Component {
   constructor(props) {
@@ -37,9 +38,8 @@ export default class Home extends Component {
     const { current } = this.state;
     return (
       <View style={styles.container}>
-        <StatusBar style="auto" />
-        <Text> ¡ WETHAREA ! </Text>
-        <Text> {JSON.stringify(current)} </Text>
+        <StatusBar style="dark" />
+        <CurrentWeatherCard weather='Sunny' temp='28' date={new Date()} place='Puerto La Cruz' feelsLike={29} />
       </View>
     );
   }
@@ -48,8 +48,7 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#34495e',
+    justifyContent: 'space-around'
   },
 });
