@@ -4,6 +4,7 @@ import { StyleSheet, ImageBackground, Text, View } from "react-native";
 
 // API fetch
 import { weather } from "../api/index";
+import CurrentWeatherCard from "../components/CurrentWheterCard";
 
 // Components
 import WeatherHourly from "../components/WeatherHourly";
@@ -46,6 +47,7 @@ export default class Home extends PureComponent {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>¡ WETHAREA !</Text>
         </View>
+        <CurrentWeatherCard weather='Sunny' temp='28' date={new Date()} place='Puerto La Cruz' feelsLike={29} />
         <WeatherHourly hourly={hourly} />
         </ImageBackground>
       </View>
@@ -56,8 +58,8 @@ export default class Home extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#2c2c54",
-    justifyContent: "center",
+    backgroundColor: '#34495e',
+    justifyContent: 'space-around'
   },
   image: {
     flex: 1,
