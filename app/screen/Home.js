@@ -27,7 +27,6 @@ export default class Home extends PureComponent {
     try {
       const response = await weather.getWeather(10.21667, -64.61667);
       const { current, hourly, daily } = await response.json();
-   
       this.setState({
         current,
         hourly,
@@ -43,12 +42,12 @@ export default class Home extends PureComponent {
     return (
       <View style={styles.container}>
         <ImageBackground source={require('../assets/img/bg.jpg')} style={styles.image}>
-        <StatusBar backgroundColor="#20232A" style="light" />
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>¡ WETHAREA !</Text>
-        </View>
-        <CurrentWeatherCard weather='Sunny' temp='28' date={new Date()} place='Puerto La Cruz' feelsLike={29} />
-        <WeatherHourly hourly={hourly} />
+          <StatusBar backgroundColor="#20232A" style="light" />
+          {/* <View style={styles.titleContainer}>
+            <Text style={styles.title}>¡ WETHAREA !</Text>
+          </View> */}
+          <CurrentWeatherCard current={current} place='Puerto La Cruz' />
+          <WeatherHourly hourly={hourly} />
         </ImageBackground>
       </View>
     );
@@ -57,14 +56,12 @@ export default class Home extends PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#34495e',
-    justifyContent: 'space-around'
+    flex: 1
   },
   image: {
     flex: 1,
     resizeMode: "cover",
-    justifyContent: "center"
+    justifyContent: 'space-around',
   },
   titleContainer: {
     flex: 1,
