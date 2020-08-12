@@ -1,21 +1,26 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 // Utils
-import { getHoursToday, kelvinToCelsius } from "../utils/utils";
+import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
 
-export default class HourlyCard extends Component {
+export default class HourlyCard extends PureComponent {
   render() {
-    const { dt, temp, humidity } = this.props.weather;
+    const { dt, temp, humidity, weather } = this.props.weather;
     return (
       <View style={styles.card}>
         <Text style={[styles.cardText, { fontWeight: "bold" }]}>
           {" "}
           {getHoursToday(dt)}{" "}
         </Text>
-        <Text style={[styles.cardText, { fontSize: 30 }]}> ☀ </Text>
-        <Text style={[styles.cardText, {fontSize: 15, fontWeight: "100" }]}>🌡{humidity}%</Text>
-        <Text style={[styles.cardText, { fontWeight: "700" }]}>
+        <Text style={[styles.cardText, { fontSize: 30 }]}>
+          {" "}
+          {getWeatherIcon(weather[0].main)}{" "}
+        </Text>
+        <Text style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}>
+          🌡{humidity}%
+        </Text>
+        <Text style={[styles.cardText, { fontWeight: "700", marginLeft: 15 }]}>
           {kelvinToCelsius(temp)}°{" "}
         </Text>
       </View>
@@ -25,11 +30,10 @@ export default class HourlyCard extends Component {
 
 const styles = StyleSheet.create({
   card: {
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: 'rgba(0,0,0,0.22)',
+    backgroundColor: "rgba(0,0,0,0.22)",
     paddingVertical: 58,
-    paddingHorizontal: 40,
+    paddingHorizontal: 38,
     borderRadius: 20,
     // borderBottomWidth: 1,
     // borderRightWidth: 1,
