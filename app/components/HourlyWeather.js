@@ -5,7 +5,7 @@ import HourlyCard from "./HourlyCard";
 
 import { filterHoursActualDay } from "../utils/utils";
 
-export default class WeatherHourly extends Component {
+export default class HourlyWeather extends Component {
   renderItem = ({ item }) => <HourlyCard weather={item} />;
 
   render() {
