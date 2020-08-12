@@ -1,20 +1,32 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { Fragment } from 'react';
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { kelvinToCelsius, getDayDateName, getWeatherIcon } from '../utils/utils';
 
-function CurrentWeatherCard({ weather, temp, feelsLike, date, place }) {
+function Current({ temp, feelsLike, date, place, weatherName }) {
     return (
-        <View style={styles.container}>
-            {/* <Image source=''/> */}
-            <Text style={styles.dateStyle}>{getDate(date)}</Text>
+        <Fragment>
+            <Text style={styles.dateStyle}>{getDayDateName(date)}</Text>
+            <Text style={styles.weatherText}>{place}</Text>
             <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.weatherIcon}>☀</Text>
+                <Text style={styles.weatherIcon}>{getWeatherIcon(weatherName)}</Text>
                 <View>
-                    <Text style={styles.tempText}>{temp}°</Text>
-                    <Text style={{ color: '#fff' }}>Feels like {feelsLike}° </Text>
-                    <Text style={{ color: '#fff' }}>{place}</Text>
-                    <Text style={{ color: '#fff' }}>{weather}</Text>
+                    <Text style={styles.tempText}>{kelvinToCelsius(temp)}°</Text>
+                    <Text style={styles.weatherText}>Feels like {kelvinToCelsius(feelsLike)}° </Text>
+                    <Text style={styles.weatherText}>{weatherName}</Text>
                 </View>
             </View>
+        </Fragment>
+    )
+}
+
+function CurrentWeatherCard({ current, place }) {
+    return (
+        <View style={styles.container}>
+            {
+                (current === null) 
+                ? <ActivityIndicator /> 
+                :<Current temp={current.temp} date={new Date(current.dt)} place={place} feelsLike={current.feels_like} weatherName={current.weather[0].main}/>
+            }
         </View>
     )
 }
@@ -23,11 +35,11 @@ export default CurrentWeatherCard;
 
 const styles = StyleSheet.create({
     container: {
-        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.22)',
         padding: 10,
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 20,
         marginHorizontal: 10
     },
     tempText: {
@@ -37,31 +49,12 @@ const styles = StyleSheet.create({
     weatherIcon: {
         fontSize: 60,
     },
+    weatherText: {
+        color: '#fff'
+    },
     dateStyle: {
         fontSize: 15,
         color: '#fff'
     }
 })
 
-
-const getWeatherIcon = (weather) => {
-    switch (weather) {
-        case 'sunny':
-            return '☀';
-        default: return '☁';
-    }
-}
-
-const getDate = (date) => {
-    return (
-        [
-            "Domingo",
-            "Lunes",
-            "Martes",
-            "Miercoles",
-            "Jueves",
-            "Viernes",
-            "Sábado",
-        ][date.getDay()] + date.getDate()
-    );
-}

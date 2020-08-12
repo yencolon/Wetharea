@@ -12,3 +12,36 @@ export const getHoursToday = (date) => {
       : `${time.getHours()}:${time.getMinutes()}0`;
   return formatTime;
 };
+
+//Envia el main del objeto weather retorna un simbolo. 
+export const getWeatherIcon = (weather) => {
+  switch (weather) {
+      case 'clear': 
+          return '☀';
+      case 'clouds':
+          return '☁'
+      case 'rain':
+          return '🌧';
+      case 'thunderstorm':
+          return '⛈';
+      case 'snow':
+          return '❄';
+      case 'mist': 
+          return '🌫'
+      default: return '☁';
+  }
+}
+
+export const getDayDateName = (date) => {
+  return (
+      [
+          "Domingo",
+          "Lunes",
+          "Martes",
+          "Miercoles",
+          "Jueves",
+          "Viernes",
+          "Sábado",
+      ][date.getDay()] + ' ' + date.getDate()
+  );
+}
