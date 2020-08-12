@@ -3,6 +3,8 @@ import { SafeAreaView, FlatList, StyleSheet } from "react-native";
 
 import HourlyCard from "./HourlyCard";
 
+import { filterHoursActualDay } from "../utils/utils";
+
 export default class WeatherHourly extends Component {
   renderItem = ({ item }) => <HourlyCard weather={item} />;
 
@@ -12,7 +14,7 @@ export default class WeatherHourly extends Component {
       <SafeAreaView style={styles.container}>
         <FlatList
           horizontal
-          data={hourly}
+          data={filterHoursActualDay(hourly)}
           renderItem={this.renderItem}
           keyExtractor={(item) => item.dt + ""}
         />
