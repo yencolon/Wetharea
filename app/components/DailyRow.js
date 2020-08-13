@@ -9,7 +9,6 @@ import {
 
 export default function DailyRow(props) {
   const { dt, temp, weather } = props.weather;
-  console.log(new Date(dt))
   return (
     <View style={styles.container}>
       <View>
