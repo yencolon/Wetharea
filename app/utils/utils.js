@@ -17,9 +17,12 @@ export const kelvinToCelsius = (measure) => {
 };
 
 export const filterHoursActualDay = (hourly) => {
-  const hours = hourly.filter((hour) => {
-    return new Date(hour.dt * 1000).getDay() === new Date().getDay();
-  });
+  const hours = hourly.filter((hour, index) =>{
+    return index < 24
+  })
+  // const hours = hourly.filter((hour) => {
+  //   return new Date(hour.dt * 1000).getDay() === new Date().getDay();
+  // });
   return hours;
 };
 
