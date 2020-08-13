@@ -4,10 +4,11 @@ import { StyleSheet, ImageBackground, Text, View } from "react-native";
 
 // API fetch
 import { weather } from "../api/index";
-import CurrentWeatherCard from "../components/CurrentWheterCard";
 
 // Components
+import CurrentWeatherCard from "../components/CurrentWheterCard";
 import HourlyWeather from "../components/HourlyWeather";
+import DailyWeather from "../components/DailyWeather";
 
 // Utils
 import { whichBackground } from "../utils/utils";
@@ -41,7 +42,7 @@ export default class Home extends PureComponent {
   };
 
   render() {
-    const { current, hourly } = this.state;
+    const { current, hourly, daily } = this.state;
 
     return (
       <View style={styles.container}>
@@ -52,6 +53,7 @@ export default class Home extends PureComponent {
           </View> */}
           <CurrentWeatherCard current={current} place="Puerto La Cruz" />
           <HourlyWeather hourly={hourly} />
+          <DailyWeather daily={daily}/>
         </ImageBackground>
       </View>
     );
