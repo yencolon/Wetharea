@@ -25,7 +25,7 @@ function CurrentWeatherCard({ current, place }) {
             {
                 (current === null) 
                 ? <ActivityIndicator /> 
-                :<Current temp={current.temp} date={new Date(current.dt)} place={place} feelsLike={current.feels_like} weatherName={current.weather[0].main}/>
+                :<Current temp={current.temp} date={new Date(current.dt * 1000)} place={place} feelsLike={current.feels_like} weatherName={current.weather[0].main}/>
             }
         </View>
     )
