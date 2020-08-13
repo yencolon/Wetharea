@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { PureComponent } from "react";
-import { StyleSheet, ImageBackground, Text, View } from "react-native";
+import { StyleSheet, ImageBackground, View } from "react-native";
 
 // API fetch
 import { weather } from "../api/index";
