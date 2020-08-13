@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { PureComponent } from "react";
 import { StyleSheet, ImageBackground, View } from "react-native";
+import * as Location from "expo-location";
 
 // API fetch
 import { weather } from "../api/index";
@@ -17,19 +18,34 @@ export default class Home extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      location: "",
       current: null,
       hourly: [],
       daily: [],
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    await this.getLocation();
     this.getWeather();
+  };
+
+  getLocation = async () => {
+    const { status } = await Location.requestPermissionsAsync();
+    if (status !== "granted") {
+      alert("Permission to access location was denied");
+    }
+
+    const location = await Location.getCurrentPositionAsync({});
+    this.setState({
+      location,
+    });
   };
 
   getWeather = async () => {
     try {
-      const response = await weather.getWeather(10.21667, -64.61667);
+      const { latitude, longitude } = this.state.location.coords
+      const response = await weather.getWeather(latitude, longitude);
       const { current, hourly, daily } = await response.json();
       this.setState({
         current,
@@ -53,7 +69,7 @@ export default class Home extends PureComponent {
           </View> */}
           <CurrentWeatherCard current={current} place="Puerto La Cruz" />
           <HourlyWeather hourly={hourly} />
-          <DailyWeather daily={daily}/>
+          <DailyWeather daily={daily} />
         </ImageBackground>
       </View>
     );
