@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import React, { PureComponent } from "react";
-import { StyleSheet, ImageBackground, View } from "react-native";
+import Constants from "expo-constants";
+import { StyleSheet, ImageBackground, View, ScrollView } from "react-native";
 import * as Location from "expo-location";
+
 
 // API fetch
 import { weather } from "../api/index";
@@ -13,15 +15,17 @@ import DailyWeather from "../components/DailyWeather";
 
 // Utils
 import { whichBackground } from "../utils/utils";
+import WeatherDetails from "../components/WeatherDetails";
 
 export default class Home extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       location: "",
-      current: null,
-      hourly: [],
+      current: {},
+      hourly: Array.from({ length: 9 }, () => ({ dt: Math.floor(Math.random() * 1000) })),
       daily: [],
+      isLoading: true
     };
   }
 
@@ -51,6 +55,7 @@ export default class Home extends PureComponent {
         current,
         hourly,
         daily,
+        isLoading: false
       });
     } catch (error) {
       console.log(error);
@@ -58,19 +63,33 @@ export default class Home extends PureComponent {
   };
 
   render() {
-    const { current, hourly, daily } = this.state;
+    const { current, hourly, daily, isLoading } = this.state;
 
     return (
       <View style={styles.container}>
-        <ImageBackground source={whichBackground()} style={styles.image}>
-          <StatusBar backgroundColor="#20232A" style="light" />
-          {/* <View style={styles.titleContainer}>
-            <Text style={styles.title}>¡ WETHAREA !</Text>
-          </View> */}
-          <CurrentWeatherCard current={current} place="Puerto La Cruz" />
-          <HourlyWeather hourly={hourly} />
-          <DailyWeather daily={daily} />
-        </ImageBackground>
+        <StatusBar style='light' translucent={true} />
+        {/* <ScrollView>
+          <ImageBackground source={whichBackground()} style={styles.image}>
+            <CurrentWeatherCard current={current} place="Puerto La Cruz" isLoading={isLoading} />
+            <HourlyWeather hourly={hourly} isLoading={isLoading} />
+            <DailyWeather daily={daily} isLoading={isLoading} />
+            <WeatherDetails />
+          </ImageBackground>
+        </ScrollView> */}
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
+          <ImageBackground source={whichBackground()} style={styles.image}>
+            <CurrentWeatherCard current={current} place="Puerto La Cruz" isLoading={isLoading} />
+            <HourlyWeather hourly={hourly} isLoading={isLoading} />
+            <DailyWeather daily={daily} isLoading={isLoading} />
+            <WeatherDetails wind_speed={current.wind_speed}
+              sunriseTime={current.sunrise}
+              sunsetTime={current.sunset}
+              pressure={current.pressure}
+              uvi={current.uvi} 
+              humidity={current.humidity}
+              isLoading={isLoading} />
+          </ImageBackground >
+        </ScrollView >
       </View>
     );
   }
@@ -82,7 +101,9 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    paddingTop: Constants.statusBarHeight,
     resizeMode: "cover",
+    flexDirection: 'column',
     justifyContent: "space-around",
   },
   titleContainer: {

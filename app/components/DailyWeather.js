@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SafeAreaView, FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, ActivityIndicator } from "react-native";
 
 import DailyRow from "./DailyRow";
 
@@ -8,23 +8,25 @@ export default class DailyWeather extends Component {
   renderItem = ({ item }) => <DailyRow weather={item} />;
 
   render() {
-    const { daily } = this.props
+    const { daily , isLoading} = this.props
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        {isLoading ? <ActivityIndicator /> : <View></View>}
         <FlatList
           data={daily}
+          style={styles.list}
+          showsVerticalScrollIndicator={false}
           renderItem={this.renderItem}
-          keyExtractor={(item) => item.dt+''}
+          keyExtractor={(item) => item.dt + ''}
           ItemSeparatorComponent={Separator}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 300,
     backgroundColor: "rgba(0,0,0,0.22)",
     paddingVertical: 12,
     paddingHorizontal: 4,
@@ -35,4 +37,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.22)",
     height: .5,
   },
+  list: {
+    maxHeight: 300,
+    minHeight: 300
+  }
 });

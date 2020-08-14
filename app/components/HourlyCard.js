@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { PureComponent, Fragment } from "react";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 
 // Utils
 import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
@@ -7,22 +7,28 @@ import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
 export default class HourlyCard extends PureComponent {
   render() {
     const { dt, temp, humidity, weather } = this.props.weather;
+    const { isLoading } = this.props;
     return (
       <View style={styles.card}>
-        <Text style={[styles.cardText, { fontWeight: "bold" }]}>
-          {" "}
-          {getHoursToday(dt)}{" "}
-        </Text>
-        <Text style={[styles.cardText, { fontSize: 30 }]}>
-          {" "}
-          {getWeatherIcon(weather[0].main)}{" "}
-        </Text>
-        <Text style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}>
-          🌡{humidity}%
-        </Text>
-        <Text style={[styles.cardText, { fontWeight: "700", marginLeft: 15 }]}>
-          {kelvinToCelsius(temp)}°{" "}
-        </Text>
+        {
+          isLoading ? <ActivityIndicator /> :
+            <Fragment>
+              <Text style={[styles.cardText, { fontWeight: "bold" }]}>
+                {" "}
+                {getHoursToday(dt)}{" "}
+              </Text>
+              <Text style={[styles.cardText, { fontSize: 30 }]}>
+                {" "}
+                {getWeatherIcon(weather[0].main)}{" "}
+              </Text>
+              <Text style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}>
+                💧{humidity}%
+            </Text>
+              <Text style={[styles.cardText, { fontWeight: "700", marginLeft: 15 }]}>
+                {kelvinToCelsius(temp)}°{" "}
+              </Text>
+            </Fragment>
+        }
       </View>
     );
   }
