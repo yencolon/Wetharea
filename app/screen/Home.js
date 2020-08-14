@@ -68,14 +68,6 @@ export default class Home extends PureComponent {
     return (
       <View style={styles.container}>
         <StatusBar style='light' translucent={true} />
-        {/* <ScrollView>
-          <ImageBackground source={whichBackground()} style={styles.image}>
-            <CurrentWeatherCard current={current} place="Puerto La Cruz" isLoading={isLoading} />
-            <HourlyWeather hourly={hourly} isLoading={isLoading} />
-            <DailyWeather daily={daily} isLoading={isLoading} />
-            <WeatherDetails />
-          </ImageBackground>
-        </ScrollView> */}
         <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
           <ImageBackground source={whichBackground()} style={styles.image}>
             <CurrentWeatherCard current={current} place="Puerto La Cruz" isLoading={isLoading} />

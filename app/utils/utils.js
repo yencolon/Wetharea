@@ -3,10 +3,10 @@ export const whichBackground = () => {
   if (date.getHours() >= 4 && date.getHours() < 6) {
     return require("../assets/img/dawn-bg.jpg");
   }
-  if (date.getHours() >= 6 && date.getHours() < 3) {
+  if (date.getHours() >= 6 && date.getHours() < 15) {
     return require("../assets/img/day-bg.jpg");
   }
-  if (date.getHours() >= 2 && date.getHours() < 19) {
+  if (date.getHours() >= 16 && date.getHours() < 19) {
     return require("../assets/img/noon-bg.jpg");
   }
   return require("../assets/img/night-bg.jpg");
@@ -35,6 +35,15 @@ export const getHoursToday = (date) => {
   return formatTime;
 };
 
+export const getUVIndex = (uvIndex) => {
+  if(uvIndex < 2) return 'Bajo 🟢';
+  if(uvIndex >= 3 && uvIndex <= 5) return 'Moderado 🟡';
+  if(uvIndex >= 6 && uvIndex <= 7) return 'Alto 🟠';
+  if(uvIndex >=8 && uvIndex <= 10) return 'Muy Alto 🔴'
+
+  return 'Ext. Alto 🟣';
+}
+
 //Envia el main del objeto weather retorna un simbolo.
 export const getWeatherIcon = (weather) => {
   switch (weather) {
@@ -56,6 +65,9 @@ export const getWeatherIcon = (weather) => {
 };
 
 export const getDayDateName = (date) => {
+  if(isNaN(date))    
+    return 'Cargando';
+
   return (
     ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"][
       date.getDay()
