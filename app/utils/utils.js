@@ -28,11 +28,18 @@ export const filterHoursActualDay = (hourly) => {
 
 export const getHoursToday = (date) => {
   const time = new Date(date * 1000);
-  const formatTime =
-    time.getHours().toString().length === 1
-      ? `0${time.getHours()}:${time.getMinutes()}0`
-      : `${time.getHours()}:${time.getMinutes()}0`;
-  return formatTime;
+  if(time.getHours().toString().length > 1 && time.getMinutes().toString().length > 1) {
+    return `${time.getHours()}:${time.getMinutes()}`
+  }
+  if(time.getHours().toString().length > 1 && time.getMinutes().toString().length === 1){
+    return `${time.getHours()}:0${time.getMinutes()}`
+  }
+  if(time.getHours().toString().length === 1 && time.getMinutes().toString().length > 1){
+    return `0${time.getHours()}:${time.getMinutes()}`
+  }
+  if(time.getHours().toString().length === 1 && time.getMinutes().toString().length === 1){
+    return `0${time.getHours()}:0${time.getMinutes()}`
+  }
 };
 
 export const getUVIndex = (uvIndex) => {
