@@ -4,7 +4,6 @@ import Constants from "expo-constants";
 import { StyleSheet, ImageBackground, View, ScrollView } from "react-native";
 import * as Location from "expo-location";
 
-
 // API fetch
 import { weather } from "../api/index";
 
@@ -23,9 +22,11 @@ export default class Home extends PureComponent {
     this.state = {
       location: "",
       current: {},
-      hourly: Array.from({ length: 9 }, () => ({ dt: Math.floor(Math.random() * 1000) })),
+      hourly: Array.from({ length: 9 }, () => ({
+        dt: Math.floor(Math.random() * 1000),
+      })),
       daily: [],
-      isLoading: true
+      isLoading: true,
     };
   }
 
@@ -48,14 +49,14 @@ export default class Home extends PureComponent {
 
   getWeather = async () => {
     try {
-      const { latitude, longitude } = this.state.location.coords
+      const { latitude, longitude } = this.state.location.coords;
       const response = await weather.getWeather(latitude, longitude);
       const { current, hourly, daily } = await response.json();
       this.setState({
         current,
         hourly,
         daily,
-        isLoading: false
+        isLoading: false,
       });
     } catch (error) {
       console.log(error);
@@ -67,21 +68,29 @@ export default class Home extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <StatusBar style='light' translucent={true} />
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} >
+        <StatusBar style="light" translucent={true} />
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <ImageBackground source={whichBackground()} style={styles.image}>
-            <CurrentWeatherCard current={current} place="Puerto La Cruz" isLoading={isLoading} />
+            <CurrentWeatherCard
+              current={current}
+              place="Puerto La Cruz"
+              isLoading={isLoading}
+            />
             <HourlyWeather hourly={hourly} isLoading={isLoading} />
-            <DailyWeather daily={daily} isLoading={isLoading} />
-            <WeatherDetails wind_speed={current.wind_speed}
+            <View>
+              <DailyWeather daily={daily} isLoading={isLoading} />
+            </View>
+            <WeatherDetails
+              wind_speed={current.wind_speed}
               sunriseTime={current.sunrise}
               sunsetTime={current.sunset}
               pressure={current.pressure}
-              uvi={current.uvi} 
+              uvi={current.uvi}
               humidity={current.humidity}
-              isLoading={isLoading} />
-          </ImageBackground >
-        </ScrollView >
+              isLoading={isLoading}
+            />
+          </ImageBackground>
+        </ScrollView>
       </View>
     );
   }
@@ -95,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Constants.statusBarHeight,
     resizeMode: "cover",
-    flexDirection: 'column',
+    flexDirection: "column",
     justifyContent: "space-around",
   },
   titleContainer: {

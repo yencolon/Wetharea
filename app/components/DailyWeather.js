@@ -13,6 +13,7 @@ export default class DailyWeather extends Component {
       <View style={styles.container}>
         {isLoading ? <ActivityIndicator /> : <View></View>}
         <FlatList
+          nestedScrollEnabled={true}
           data={daily}
           style={styles.list}
           showsVerticalScrollIndicator={false}
