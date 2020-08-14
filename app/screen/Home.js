@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import React, { PureComponent } from "react";
-import Constants from "expo-constants";
 import { StyleSheet, ImageBackground, View, ScrollView } from "react-native";
+
+// Expo imports
+import Constants from "expo-constants";
 import * as Location from "expo-location";
 
 // API fetch
@@ -11,6 +13,9 @@ import { weather } from "../api/index";
 import CurrentWeatherCard from "../components/CurrentWheterCard";
 import HourlyWeather from "../components/HourlyWeather";
 import DailyWeather from "../components/DailyWeather";
+
+// AsyncStorage
+import { localStorage } from "../storage/localStorage";
 
 // Utils
 import { whichBackground } from "../utils/utils";
@@ -31,14 +36,28 @@ export default class Home extends PureComponent {
   }
 
   componentDidMount = async () => {
+    await this.getWeatherLocalStorage();
     await this.getLocation();
     this.getWeather();
+  };
+
+  getWeatherLocalStorage = async () => {
+    const weather = await localStorage.getForecast();
+    if (weather) {
+      const { current, hourly, daily } = weather;
+      this.setState({
+        current,
+        hourly,
+        daily,
+        isLoading: false,
+      });
+    }
   };
 
   getLocation = async () => {
     const { status } = await Location.requestPermissionsAsync();
     if (status !== "granted") {
-      alert("Permission to access location was denied");
+      alert("El permiso para accesar a la locacion fue denegado");
     }
 
     const location = await Location.getCurrentPositionAsync({});
@@ -58,6 +77,7 @@ export default class Home extends PureComponent {
         daily,
         isLoading: false,
       });
+      localStorage.setForecast({ current, hourly, daily });
     } catch (error) {
       console.log(error);
     }
