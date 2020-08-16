@@ -79,7 +79,7 @@ export default class Home extends PureComponent {
       location,
       address: address[0].city + ', ' + address[0].region + ' ' + address[0].country
     });
-    localStorage.setAddress(addres[0]);
+    localStorage.setAddress(address[0]);
   };
 
   getWeather = async () => {
