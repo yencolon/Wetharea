@@ -26,6 +26,7 @@ export default class Home extends PureComponent {
     super(props);
     this.state = {
       location: "",
+      address: "Cargando",
       current: {},
       hourly: Array.from({ length: 9 }, () => ({
         dt: Math.floor(Math.random() * 1000),
@@ -37,8 +38,19 @@ export default class Home extends PureComponent {
 
   componentDidMount = async () => {
     await this.getWeatherLocalStorage();
+    await this.getAddresLocalStorage();
     await this.getLocation();
     this.getWeather();
+  };
+
+  getAddresLocalStorage = async () => {
+    const address = await localStorage.getAddress();
+    if (address) {
+      this.setState({
+        address: address.city + ', ' + address.region + ' ' + address.country,
+        isLoading: false,
+      });
+    }
   };
 
   getWeatherLocalStorage = async () => {
@@ -61,9 +73,13 @@ export default class Home extends PureComponent {
     }
 
     const location = await Location.getCurrentPositionAsync({});
+    const address = await Location.reverseGeocodeAsync({latitude: location.coords.latitude, longitude: location.coords.longitude});
+    
     this.setState({
       location,
+      address: address[0].city + ', ' + address[0].region + ' ' + address[0].country
     });
+    localStorage.setAddress(addres[0]);
   };
 
   getWeather = async () => {
@@ -84,8 +100,7 @@ export default class Home extends PureComponent {
   };
 
   render() {
-    const { current, hourly, daily, isLoading } = this.state;
-
+    const { current, hourly, daily, address, isLoading } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar style="light" translucent={true} />
@@ -93,7 +108,7 @@ export default class Home extends PureComponent {
           <ImageBackground source={whichBackground()} style={styles.image}>
             <CurrentWeatherCard
               current={current}
-              place="Puerto La Cruz"
+              place={address}
               isLoading={isLoading}
             />
             <HourlyWeather hourly={hourly} isLoading={isLoading} />

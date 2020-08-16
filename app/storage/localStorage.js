@@ -15,4 +15,18 @@ export const localStorage = {
       console.log(error + ", no se pudo obtener pronostico");
     }
   },
+  async setAddress(address) {
+    try {
+      await AsyncStorage.setItem("address", JSON.stringify(address));
+    } catch (error) {
+      console.log(error + ", no se pudo guardar la direccion");
+    }
+  },
+  async getAddress() {
+    try {
+      return JSON.parse(await AsyncStorage.getItem("address"));
+    } catch (error) {
+      console.log(error + ", no se pudo obtener direccion");
+    }
+  },
 };
