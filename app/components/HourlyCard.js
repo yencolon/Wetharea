@@ -1,5 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
+import ActivityIndicatorApp from '../components/ActivityIndicatorApp'
 
 // Utils
 import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
@@ -11,7 +13,7 @@ export default class HourlyCard extends PureComponent {
     return (
       <View style={styles.card}>
         {
-          isLoading ? <ActivityIndicator /> :
+          isLoading ? <ActivityIndicatorApp /> :
             <Fragment>
               <Text style={[styles.cardText, { fontWeight: "bold" }]}>
                 {" "}
