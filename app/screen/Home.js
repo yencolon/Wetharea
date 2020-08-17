@@ -1,6 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React, { PureComponent } from "react";
-import { StyleSheet, ImageBackground, View, ScrollView, Modal } from "react-native";
+import {
+  StyleSheet,
+  ImageBackground,
+  View,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 
 // Expo imports
 import Constants from "expo-constants";
@@ -33,6 +39,7 @@ export default class Home extends PureComponent {
       })),
       daily: [],
       isLoading: true,
+      refreshing: false,
     };
   }
 
@@ -47,7 +54,7 @@ export default class Home extends PureComponent {
     const address = await localStorage.getAddress();
     if (address) {
       this.setState({
-        address: address.city + ', ' + address.region + ' ' + address.country,
+        address: address.city + ", " + address.region + " " + address.country,
         isLoading: false,
       });
     }
@@ -77,7 +84,8 @@ export default class Home extends PureComponent {
 
     this.setState({
       location,
-      address: address[0].city + ', ' + address[0].region + ' ' + address[0].country
+      address:
+        address[0].city + ", " + address[0].region + " " + address[0].country,
     });
     localStorage.setAddress(address[0]);
   };
@@ -99,12 +107,39 @@ export default class Home extends PureComponent {
     }
   };
 
+  onRefresh = () => {
+    this.setState({
+      refreshing: true,
+      isLoading: true,
+    });
+    this.getWeather();
+    this.setState({
+      refreshing: false,
+      isLoading: true,
+    });
+  };
+
   render() {
-    const { current, hourly, daily, address, isLoading } = this.state;
+    const {
+      current,
+      hourly,
+      daily,
+      address,
+      isLoading,
+      refreshing,
+    } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar style="light" translucent={true} />
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
           <ImageBackground source={whichBackground()} style={styles.image}>
             <CurrentWeatherCard
               current={current}

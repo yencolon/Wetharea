@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { kelvinToCelsius, getDayDateName, getWeatherIcon } from '../utils/utils';
+
+import ActivityIndicatorApp from '../components/ActivityIndicatorApp'
 
 function Current({ temp = 284, feelsLike = 284, date, place='Cargando', weatherName = 'Clouds' }) {
     return (
@@ -23,7 +25,7 @@ function CurrentWeatherCard({ current, place, isLoading}) {
     const weatherName = current.weather? current.weather[0].main : 'Clouds';
     return (
         <View style={styles.container}>
-            {isLoading? <ActivityIndicator /> : <View></View>}
+            {isLoading? <ActivityIndicatorApp /> : <View></View>}
             <Current temp={current.temp} date={new Date(current.dt * 1000)} place={place} feelsLike={current.feels_like} weatherName={weatherName} />
         </View>
     )
