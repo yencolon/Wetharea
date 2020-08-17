@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { PureComponent } from "react";
-import { StyleSheet, ImageBackground, View, ScrollView } from "react-native";
+import { StyleSheet, ImageBackground, View, ScrollView, Modal } from "react-native";
 
 // Expo imports
 import Constants from "expo-constants";
@@ -73,13 +73,13 @@ export default class Home extends PureComponent {
     }
 
     const location = await Location.getCurrentPositionAsync({});
-    const address = await Location.reverseGeocodeAsync({latitude: location.coords.latitude, longitude: location.coords.longitude});
-    
+    const address = await Location.reverseGeocodeAsync({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+
     this.setState({
       location,
       address: address[0].city + ', ' + address[0].region + ' ' + address[0].country
     });
-    localStorage.setAddress(addres[0]);
+    localStorage.setAddress(address[0]);
   };
 
   getWeather = async () => {
