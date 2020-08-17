@@ -20,7 +20,6 @@ export default function App() {
     
     const getCurrentWeather = async() => {
       const currentWeather = (await localStorage.getForecast())
-      if(currentWeather) setinitialScreen()
     }
 
     getCurrentWeather()
@@ -37,8 +36,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
-          <Stack.Screen name="SearchLocation" component={SearchLocation}  />
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="SearchLocation" component={SearchLocation}  options={{headerShown: false}}/>
+          <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
