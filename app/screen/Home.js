@@ -7,13 +7,12 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-
+import * as Location from "expo-location";
 // Expo imports
 import Constants from "expo-constants";
-import * as Location from "expo-location";
 
 // API fetch
-import { weather } from "../api/index";
+import { weather, searchLoaction } from "../api/index";
 
 // Components
 import CurrentWeatherCard from "../components/CurrentWheterCard";
@@ -26,6 +25,7 @@ import { localStorage } from "../storage/localStorage";
 // Utils
 import { whichBackground } from "../utils/utils";
 import WeatherDetails from "../components/WeatherDetails";
+import { add } from "react-native-reanimated";
 
 export default class Home extends PureComponent {
   constructor(props) {
@@ -44,18 +44,32 @@ export default class Home extends PureComponent {
   }
 
   componentDidMount = async () => {
+    await this.getCoordinatesStorage();
     await this.getWeatherLocalStorage();
     await this.getAddresLocalStorage();
-    await this.getLocation();
     this.getWeather();
   };
+
+  getCoordinatesStorage =  async () => {
+    const coordinates = await localStorage.getCoordinates()
+    console.log(coordinates)
+    if(coordinates){
+      this.setState({
+        location:{
+          coords: {
+            latitude: coordinates.latitude,
+            longitude: coordinates.longitude
+          }
+        }
+      })
+    }
+  }
 
   getAddresLocalStorage = async () => {
     const address = await localStorage.getAddress();
     if (address) {
       this.setState({
-        address: address.city + ", " + address.region + " " + address.country,
-        isLoading: false,
+        address: address
       });
     }
   };
@@ -67,40 +81,29 @@ export default class Home extends PureComponent {
       this.setState({
         current,
         hourly,
-        daily,
-        isLoading: false,
+        daily
       });
     }
   };
 
-  getLocation = async () => {
-    const { status } = await Location.requestPermissionsAsync();
-    if (status !== "granted") {
-      alert("El permiso para accesar a la locacion fue denegado");
-    }
-
-    const location = await Location.getCurrentPositionAsync({});
-    const address = await Location.reverseGeocodeAsync({ latitude: location.coords.latitude, longitude: location.coords.longitude });
-
-    this.setState({
-      location,
-      address:
-        address[0].city + ", " + address[0].region + " " + address[0].country,
-    });
-    localStorage.setAddress(address[0]);
-  };
 
   getWeather = async () => {
     try {
       const { latitude, longitude } = this.state.location.coords;
       const response = await weather.getWeather(latitude, longitude);
       const { current, hourly, daily } = await response.json();
+      const address = await (await searchLoaction.getReverseLocation(latitude, longitude)).json();
+      
       this.setState({
         current,
         hourly,
         daily,
+        address: address.display_name,
         isLoading: false,
       });
+
+      localStorage.setAddress(address.display_name);
+    
       localStorage.setForecast({ current, hourly, daily });
     } catch (error) {
       console.log(error);
