@@ -108,6 +108,10 @@ export default class Home extends PureComponent {
       localStorage.setForecast({ current, hourly, daily });
     } catch (error) {
       console.log(error);
+      this.setState({
+        isLoading: false
+      })
+      alert('Error a actualizar clima')
     }
   };
 
