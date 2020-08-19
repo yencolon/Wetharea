@@ -52,7 +52,6 @@ export default class Home extends PureComponent {
 
   getCoordinatesStorage =  async () => {
     const coordinates = await localStorage.getCoordinates()
-    console.log(coordinates)
     if(coordinates){
       this.setState({
         location:{
