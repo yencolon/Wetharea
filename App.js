@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import InitialScreen from "./app/screen/InitialScreen";
 import SearchLocation from "./app/screen/SearchLocation";
 import Home from "./app/screen/Home";
+import ManageLocations from "./app/screen/ManageLocations";
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -25,6 +26,11 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ManageLocations"
+          component={ManageLocations}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
