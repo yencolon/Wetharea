@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, TextInput, FlatList, Text } from "react-native";
-import { StackActions } from '@react-navigation/native';
+import { StatusBar } from "expo-status-bar";
+import { StackActions } from "@react-navigation/native";
 import * as Location from "expo-location";
 
 // Expo imports
@@ -14,40 +15,75 @@ import { weather } from "../api/index";
 import { localStorage } from "../storage/localStorage";
 
 // Components
-import ActivityIndicatorApp from '../components/ActivityIndicatorApp'
+import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 import SearchRow from "../components/SearchRow";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const cities = [
-    {name: 'Mi Localización', isLocation: true },
-    {name: 'Nueva York', isLocation: false, location: {lat: 40.712776, lon: -74.005974}},
-    {name: 'París', isLocation: false, location: {lat: 48.856613, lon: 2.352222}},
-    {name: 'Tokio', isLocation: false, location: {lat: 35.689487, lon: 139.691711}},
-    {name: 'Singapur', isLocation: false, location: {lat: 1.290270, lon: 103.851959}},
-    {name: 'Londres', isLocation: false, location: {lat: 51.50853, lon: -0.12574}},
-    {name: 'Caracas', isLocation: false, location: {lat: 10.48801, lon:  -66.87919}},
-    {name: 'Hong Kong', isLocation: false, location: {lat: 22.27832, lon: 114.17469}},
-  ]
+  { name: "Mi Localización", isLocation: true },
+  {
+    name: "Nueva York",
+    isLocation: false,
+    location: { lat: 40.712776, lon: -74.005974 },
+  },
+  {
+    name: "París",
+    isLocation: false,
+    location: { lat: 48.856613, lon: 2.352222 },
+  },
+  {
+    name: "Tokio",
+    isLocation: false,
+    location: { lat: 35.689487, lon: 139.691711 },
+  },
+  {
+    name: "Singapur",
+    isLocation: false,
+    location: { lat: 1.29027, lon: 103.851959 },
+  },
+  {
+    name: "Londres",
+    isLocation: false,
+    location: { lat: 51.50853, lon: -0.12574 },
+  },
+  {
+    name: "Caracas",
+    isLocation: false,
+    location: { lat: 10.48801, lon: -66.87919 },
+  },
+  {
+    name: "Hong Kong",
+    isLocation: false,
+    location: { lat: 22.27832, lon: 114.17469 },
+  },
+];
 
-function DefaultCities({ cities , onAskLocation, onSetLocation}) {
+function DefaultCities({ cities, onAskLocation, onSetLocation }) {
   return (
     <View style={styles.citiesContainer}>
-      {
-        cities.map(city => {
-          return (
-          <TouchableOpacity onPress={() => city.isLocation? onAskLocation() : onSetLocation(city.location.lat, city.location.lon)} style={styles.boundBox} key={city.name}>
+      {cities.map((city) => {
+        return (
+          <TouchableOpacity
+            onPress={() =>
+              city.isLocation
+                ? onAskLocation()
+                : onSetLocation(city.location.lat, city.location.lon)
+            }
+            style={styles.boundBox}
+            key={city.name}
+          >
             <Text style={styles.cityName}>{city.name}</Text>
-          </TouchableOpacity>)
-        })
-      }
+          </TouchableOpacity>
+        );
+      })}
     </View>
-  )
+  );
 }
 
 export default function SearchLocation({ navigation }) {
   const [search, setSearch] = useState("");
   const [places, setPlaces] = useState([]);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const searchApi = async () => {
@@ -69,19 +105,17 @@ export default function SearchLocation({ navigation }) {
     }
     const location = await Location.getCurrentPositionAsync({});
 
-    setLocation(location.coords.latitude, location.coords.longitude)
+    setLocation(location.coords.latitude, location.coords.longitude);
   };
-
 
   const setLocation = async (latitude, longitude) => {
     try {
-      console.log(latitude)
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await weather.getWeather(latitude, longitude);
       const { current, hourly, daily } = await response.json();
-      localStorage.setCoordinates(latitude, longitude)
+      localStorage.setCoordinates(latitude, longitude);
       localStorage.setForecast({ current, hourly, daily });
-      setIsLoading(false)
+      setIsLoading(false);
       navigation.dispatch(StackActions.replace("Home"));
     } catch (error) {
       console.log(error);
@@ -101,11 +135,19 @@ export default function SearchLocation({ navigation }) {
   const Separator = () => <View style={styles.separator} />;
 
   if (isLoading) {
-    return <ActivityIndicatorApp />
+    return (
+      <View style={styles.containerLoading}>
+        <StatusBar style="auto" translucent={true} />
+        <Text>¡ W E T H A R E A !</Text>
+        <ActivityIndicatorApp />
+        <Text style={{ fontSize: 15 }}>Cargando ..</Text>
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" translucent={true} />
       <View style={styles.input}>
         <AntDesign name="search1" size={20} color="gray" />
         <TextInput
@@ -115,8 +157,12 @@ export default function SearchLocation({ navigation }) {
           underlineColorAndroid="transparent"
           placeholder="Buscar (Ej. pais, estado, ciudad, calle, codigo postal)"
         />
-      </View> 
-      <DefaultCities cities={cities} onAskLocation={getLocation} onSetLocation={setLocation}/>
+      </View>
+      <DefaultCities
+        cities={cities}
+        onAskLocation={getLocation}
+        onSetLocation={setLocation}
+      />
       <FlatList
         data={places}
         renderItem={renderItem}
@@ -128,6 +174,12 @@ export default function SearchLocation({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  containerLoading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "whitesmoke",
+  },
   container: {
     paddingTop: 50,
     flex: 1,
@@ -152,21 +204,21 @@ const styles = StyleSheet.create({
     height: 0.5,
   },
   citiesContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'center', 
-    alignContent: 'space-around', 
-    flexWrap: 'wrap' 
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "space-around",
+    flexWrap: "wrap",
   },
-  boundBox: { 
-    borderRadius: 30, 
-    backgroundColor: 'rgba(0,0,0, .5)', 
-    padding: 10, 
-    margin: 5, 
-    minWidth: 80  
+  boundBox: {
+    borderRadius: 30,
+    backgroundColor: "rgba(0,0,0, .5)",
+    padding: 10,
+    margin: 5,
+    minWidth: 80,
   },
   cityName: {
-    color: 'white', 
+    color: "white",
     fontSize: 10,
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
 });
