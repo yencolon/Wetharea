@@ -15,6 +15,7 @@ import Constants from "expo-constants";
 import { weather, searchLoaction } from "../api/index";
 
 // Components
+import Options from "../components/Options";
 import CurrentWeatherCard from "../components/CurrentWheterCard";
 import HourlyWeather from "../components/HourlyWeather";
 import DailyWeather from "../components/DailyWeather";
@@ -50,25 +51,25 @@ export default class Home extends PureComponent {
     this.getWeather();
   };
 
-  getCoordinatesStorage =  async () => {
-    const coordinates = await localStorage.getCoordinates()
-    if(coordinates){
+  getCoordinatesStorage = async () => {
+    const coordinates = await localStorage.getCoordinates();
+    if (coordinates) {
       this.setState({
-        location:{
+        location: {
           coords: {
             latitude: coordinates.latitude,
-            longitude: coordinates.longitude
-          }
-        }
-      })
+            longitude: coordinates.longitude,
+          },
+        },
+      });
     }
-  }
+  };
 
   getAddresLocalStorage = async () => {
     const address = await localStorage.getAddress();
     if (address) {
       this.setState({
-        address: address
+        address: address,
       });
     }
   };
@@ -80,19 +81,20 @@ export default class Home extends PureComponent {
       this.setState({
         current,
         hourly,
-        daily
+        daily,
       });
     }
   };
-
 
   getWeather = async () => {
     try {
       const { latitude, longitude } = this.state.location.coords;
       const response = await weather.getWeather(latitude, longitude);
       const { current, hourly, daily } = await response.json();
-      const address = await (await searchLoaction.getReverseLocation(latitude, longitude)).json();
-      
+      const address = await (
+        await searchLoaction.getReverseLocation(latitude, longitude)
+      ).json();
+
       this.setState({
         current,
         hourly,
@@ -102,7 +104,7 @@ export default class Home extends PureComponent {
       });
 
       localStorage.setAddress(address.display_name);
-    
+
       localStorage.setForecast({ current, hourly, daily });
     } catch (error) {
       console.log(error);
@@ -143,6 +145,7 @@ export default class Home extends PureComponent {
           }
         >
           <ImageBackground source={whichBackground()} style={styles.image}>
+            <Options navigation={this.props.navigation}/>
             <CurrentWeatherCard
               current={current}
               place={address}
