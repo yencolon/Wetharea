@@ -24,23 +24,26 @@ export const localStorage = {
   },
   async getAddress() {
     try {
-      return (await AsyncStorage.getItem("address"));
+      return await AsyncStorage.getItem("address");
     } catch (error) {
       console.log(error + ", no se pudo obtener direccion");
     }
   },
-  async setCoordinates(latitude, longitude){
-    try{
-      await AsyncStorage.setItem("coordinates", JSON.stringify({latitude, longitude}));
-    }catch(error){
+  async setCoordinates(latitude, longitude) {
+    try {
+      await AsyncStorage.setItem(
+        "coordinates",
+        JSON.stringify({ latitude, longitude })
+      );
+    } catch (error) {
       console.log(error + ", no se pudo guardar las coordenadas");
     }
   },
-  async getCoordinates(){
-    try{
+  async getCoordinates() {
+    try {
       return JSON.parse(await AsyncStorage.getItem("coordinates"));
-    }catch(error){
+    } catch (error) {
       console.log(error + ", no se pudo obtener las coordenadas");
     }
-  }
+  },
 };
