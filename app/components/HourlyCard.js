@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+// Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 
 // Utils

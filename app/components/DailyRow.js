@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+// Utils
 import {
   getWeatherIcon,
   getDayDateName,
@@ -13,10 +14,14 @@ export default function DailyRow(props) {
     <View style={styles.container}>
       <View>
         <Text style={styles.text}>
-          {getWeatherIcon(weather[0].main)} {getDayDateName(new Date(dt * 1000))} .{" "}
-          {weather[0].main}
+          {getWeatherIcon(weather[0].main)}{" "}
+          {getDayDateName(new Date(dt * 1000))} . {weather[0].main}
         </Text>
-        <Text style={{ color: "#fff", marginLeft: 5, textTransform: 'capitalize' }}>{weather[0].description}</Text>
+        <Text
+          style={{ color: "#fff", marginLeft: 5, textTransform: "capitalize" }}
+        >
+          {weather[0].description}
+        </Text>
       </View>
       <Text style={styles.text}>
         {kelvinToCelsius(temp.min)}°/ {kelvinToCelsius(temp.max)}°

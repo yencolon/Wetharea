@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { getHoursToday, getUVIndex } from "../utils/utils";
 
+// Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
-import { preventAutoHide } from "expo/build/launch/SplashScreen";
 
 function RowDetail({ title, icon, value }) {
   return (

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
+// Components
 import DailyRow from "./DailyRow";
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 
 const Separator = () => <View style={styles.separator} />;
+
 export default class DailyWeather extends Component {
   renderItem = ({ item }) => <DailyRow weather={item} />;
 

@@ -1,4 +1,4 @@
-import React, { useRef, Fragment } from "react";
+import React, { useRef } from "react";
 import { StyleSheet, Animated, Easing } from "react-native";
 
 const ActivityIndicatorApp = () => {
@@ -17,10 +17,10 @@ const ActivityIndicatorApp = () => {
     outputRange: ["0deg", "360deg"],
   });
   return (
-      <Animated.Image
-        style={[styles.tinyLogo, { transform: [{ rotate: spin }] }]}
-        source={require("../assets/img/loader.png")}
-      />
+    <Animated.Image
+      style={[styles.tinyLogo, { transform: [{ rotate: spin }] }]}
+      source={require("../assets/img/loader.png")}
+    />
   );
 };
 

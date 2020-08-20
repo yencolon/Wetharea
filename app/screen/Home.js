@@ -7,7 +7,7 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import * as Location from "expo-location";
+
 // Expo imports
 import Constants from "expo-constants";
 
@@ -20,13 +20,12 @@ import CurrentWeatherCard from "../components/CurrentWheterCard";
 import HourlyWeather from "../components/HourlyWeather";
 import DailyWeather from "../components/DailyWeather";
 
-// AsyncStorage
+// LocalStorage
 import { localStorage } from "../storage/localStorage";
 
 // Utils
 import { whichBackground } from "../utils/utils";
 import WeatherDetails from "../components/WeatherDetails";
-import { add } from "react-native-reanimated";
 
 export default class Home extends PureComponent {
   constructor(props) {
@@ -109,9 +108,9 @@ export default class Home extends PureComponent {
     } catch (error) {
       console.log(error);
       this.setState({
-        isLoading: false
-      })
-      alert('Error a actualizar clima')
+        isLoading: false,
+      });
+      alert("Error a actualizar clima");
     }
   };
 
@@ -149,7 +148,7 @@ export default class Home extends PureComponent {
           }
         >
           <ImageBackground source={whichBackground()} style={styles.image}>
-            <Options navigation={this.props.navigation}/>
+            <Options navigation={this.props.navigation} />
             <CurrentWeatherCard
               current={current}
               place={address}

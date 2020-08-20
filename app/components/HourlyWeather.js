@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 
+// Components
 import HourlyCard from "./HourlyCard";
 
+// Utils
 import { filterHoursActualDay } from "../utils/utils";
 
 export default class HourlyWeather extends Component {
-
-  renderItem = ({ item }) => <HourlyCard weather={item} isLoading={this.props.isLoading} />;
+  renderItem = ({ item }) => (
+    <HourlyCard weather={item} isLoading={this.props.isLoading} />
+  );
 
   render() {
     const { hourly } = this.props;

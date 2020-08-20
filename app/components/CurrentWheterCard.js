@@ -6,6 +6,7 @@ import {
   getWeatherIcon,
 } from "../utils/utils";
 
+// Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 
 function Current({

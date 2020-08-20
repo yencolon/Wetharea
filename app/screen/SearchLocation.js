@@ -138,9 +138,9 @@ export default function SearchLocation({ navigation }) {
     return (
       <View style={styles.containerLoading}>
         <StatusBar style="light" translucent={true} />
-        <Text style={{color:'whitesmoke'}}>¡ W E T H A R E A !</Text>
+        <Text style={{ color: "whitesmoke" }}>¡ W E T H A R E A !</Text>
         <ActivityIndicatorApp />
-        <Text style={{ fontSize: 15, color:'whitesmoke' }}>Cargando ..</Text>
+        <Text style={{ fontSize: 15, color: "whitesmoke" }}>Cargando ..</Text>
       </View>
     );
   }
