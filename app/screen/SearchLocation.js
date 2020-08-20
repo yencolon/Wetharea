@@ -137,17 +137,17 @@ export default function SearchLocation({ navigation }) {
   if (isLoading) {
     return (
       <View style={styles.containerLoading}>
-        <StatusBar style="auto" translucent={true} />
-        <Text>¡ W E T H A R E A !</Text>
+        <StatusBar style="light" translucent={true} />
+        <Text style={{color:'whitesmoke'}}>¡ W E T H A R E A !</Text>
         <ActivityIndicatorApp />
-        <Text style={{ fontSize: 15 }}>Cargando ..</Text>
+        <Text style={{ fontSize: 15, color:'whitesmoke' }}>Cargando ..</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" translucent={true} />
+      <StatusBar style="light" translucent={true} />
       <View style={styles.input}>
         <AntDesign name="search1" size={20} color="gray" />
         <TextInput
@@ -178,12 +178,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "whitesmoke",
+    backgroundColor: "#2A2C33",
   },
   container: {
     paddingTop: 50,
     flex: 1,
-    backgroundColor: "whitesmoke",
+    backgroundColor: "#2A2C33",
   },
   input: {
     backgroundColor: "white",
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     paddingVertical: 1,
   },
   separator: {
-    backgroundColor: "rgba(0,0,0,0.22)",
+    backgroundColor: "rgba(255,255,255,0.22)",
     height: 0.5,
   },
   citiesContainer: {
@@ -211,13 +211,13 @@ const styles = StyleSheet.create({
   },
   boundBox: {
     borderRadius: 30,
-    backgroundColor: "rgba(0,0,0, .5)",
+    backgroundColor: "rgba(4,4,4, .5)",
     padding: 10,
     margin: 5,
     minWidth: 80,
   },
   cityName: {
-    color: "white",
+    color: "whitesmoke",
     fontSize: 10,
     textAlign: "center",
   },
