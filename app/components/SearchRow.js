@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20
     },
     cityText: {
-        color: '#323031',
+        color: 'whitesmoke',
         fontSize: 20,
     },
     infoCityText: {
