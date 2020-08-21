@@ -8,8 +8,7 @@ import * as Location from "expo-location";
 import { AntDesign } from "@expo/vector-icons";
 
 // API fetch
-import { searchLoaction } from "../api/index";
-import { weather } from "../api/index";
+import { weather, searchLoaction } from "../api/index";
 
 // LocalStorgae
 import { localStorage } from "../storage/localStorage";
@@ -115,6 +114,32 @@ export default function SearchLocation({ navigation }) {
       const { current, hourly, daily } = await response.json();
       localStorage.setCoordinates(latitude, longitude);
       localStorage.setForecast({ current, hourly, daily });
+
+      const savedLocations = await localStorage.getSavedLocations();
+      const address = await (
+        await searchLoaction.getReverseLocation(latitude, longitude)
+      ).json();
+      if (!savedLocations) {
+        const newLocation = [
+          {
+            id: `${latitude}+${longitude}`,
+            name: address.display_name,
+            latitude,
+            longitude,
+          },
+        ];
+        localStorage.setSavedLocations(newLocation);
+      } else {
+        let newLocation = savedLocations;
+        newLocation.push({
+          id: `${latitude}+${longitude}`,
+          name: address.display_name,
+          latitude,
+          longitude,
+        });
+        localStorage.setSavedLocations(newLocation);
+      }
+
       setIsLoading(false);
       navigation.dispatch(StackActions.replace("Home"));
     } catch (error) {

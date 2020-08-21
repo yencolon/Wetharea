@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { StackActions } from "@react-navigation/native";
 
 // Expo imports
 import { StatusBar } from "expo-status-bar";
@@ -18,44 +19,11 @@ import { localStorage } from "../storage/localStorage";
 // Utils
 import { kelvinToCelsius, getWeatherIcon } from "../utils/utils";
 
-const locations = [
-  {
-    id: "0",
-    name: "Tokio",
-    latituded: 0,
-    longitude: 0,
-  },
-  {
-    id: "1",
-    name: "Berlin",
-    latituded: 1,
-    longitude: 1,
-  },
-  {
-    id: "2",
-    name: "Marruecos",
-    latituded: 2,
-    longitude: 2,
-  },
-  {
-    id: "3",
-    name: "Manaos",
-    latituded: 3,
-    longitude: 3,
-  },
-  {
-    id: "4",
-    name: "Roma",
-    latituded: 4,
-    longitude: 4,
-  },
-  {
-    id: "5",
-    name: "Paris",
-    latituded: 5,
-    longitude: 5,
-  },
-];
+// API fetch
+import { weather } from "../api/index";
+
+// Components
+import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 
 function LocationCard({ onSelect, location, onDelete }) {
   return (
@@ -71,14 +39,24 @@ function LocationCard({ onSelect, location, onDelete }) {
   );
 }
 
-const ManageLocations = () => {
+const ManageLocations = ({ navigation }) => {
   const [currentLocation, setCurrentLocation] = useState("");
   const [temperature, setTemperature] = useState("");
   const [icon, setIcon] = useState("");
+  const [locations, setLocations] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const getLocations = async () => {
       try {
+        const locations = await localStorage.getSavedLocations();
+        if (locations) {
+          setLocations(
+            locations.filter((location) => {
+              return location.name !== currentLocation;
+            })
+          );
+        }
         const currentAddress = await localStorage.getAddress();
         if (currentAddress) {
           setCurrentLocation(currentAddress);
@@ -89,25 +67,56 @@ const ManageLocations = () => {
           setTemperature(current.temp);
           setIcon(current.weather[0].main);
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     getLocations();
-  }, []);
+  }, [locations]);
 
-  const onSelect = (item) => {
-    console.log(item.latituded, item.longitude);
+  const onSelect = async (item) => {
+    try {
+      setIsLoading(true);
+      const response = await weather.getWeather(item.latitude, item.longitude);
+      const { current, hourly, daily } = await response.json();
+      localStorage.setCoordinates(item.latitude, item.longitude);
+      localStorage.setForecast({ current, hourly, daily });
+      setIsLoading(false);
+      navigation.dispatch(StackActions.replace("Home"));
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
   };
 
-  const onDelete = (index) => {
-    console.log(index);
+  const onDelete = async (index) => {
+    try {
+      let savedLocations = await localStorage.getSavedLocations();
+      savedLocations.splice(index, 1);
+      // setLocations(savedLocations);
+      await localStorage.setSavedLocations(savedLocations);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <View style={styles.containerLoading}>
+        <StatusBar style="light" translucent={true} />
+        <Text style={{ color: "whitesmoke" }}>¡ W E T H A R E A !</Text>
+        <ActivityIndicatorApp />
+        <Text style={{ fontSize: 15, color: "whitesmoke" }}>Cargando ..</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <StatusBar style="light" backgroundColor={"#111"} />
       <View style={styles.currentLocation}>
         <View style={{ flexDirection: "row" }}>
-          <SimpleLineIcons name="location-pin" size={24} color="whitesmoke" />
+          <SimpleLineIcons name="location-pin" size={28} color="whitesmoke" />
           <Text style={styles.currentLocationText}>{currentLocation}</Text>
         </View>
         <Text style={{ color: "whitesmoke", fontSize: 28 }}>
@@ -169,21 +178,31 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   locationCard: {
+    minHeight: 80,
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginHorizontal: 5,
     marginVertical: 3,
-    padding: 25,
-    borderRadius: 50,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 28,
     backgroundColor: "rgba(0,0,0,0.22)",
   },
   textLocationContainer: {
     flexDirection: "row",
     alignItems: "center",
+    width: 300,
   },
   textLocation: {
-    marginLeft: 5,
+    marginLeft: 3,
     color: "whitesmoke",
     fontSize: 15,
+  },
+  containerLoading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#2A2C33",
   },
 });

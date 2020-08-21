@@ -46,4 +46,18 @@ export const localStorage = {
       console.log(error + ", no se pudo obtener las coordenadas");
     }
   },
+  async setSavedLocations(locations) {
+    try {
+      await AsyncStorage.setItem("locations", JSON.stringify(locations));
+    } catch (error) {
+      console.log(error + ", no se pudo guardar las locaciones");
+    }
+  },
+  async getSavedLocations() {
+    try {
+      return JSON.parse(await AsyncStorage.getItem("locations"));
+    } catch (error) {
+      console.log(error + ", no se puedo obtener las locaciones");
+    }
+  },
 };
