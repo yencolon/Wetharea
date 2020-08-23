@@ -25,8 +25,11 @@ export const filterHoursActualDay = (hourly) => {
   return hours;
 };
 
-export const getHoursToday = (date) => {
-  const time = new Date(date * 1000);
+export const getHoursToday = (date, timezoneOffset) => {  
+  
+  const time =  new Date(date * 1000);
+  time.setUTCSeconds(timezoneOffset + time.getTimezoneOffset() * 60);
+
   if (
     time.getHours().toString().length > 1 &&
     time.getMinutes().toString().length > 1
@@ -63,22 +66,55 @@ export const getUVIndex = (uvIndex) => {
 };
 
 //Envia el main del objeto weather retorna un simbolo.
-export const getWeatherIcon = (weather) => {
-  switch (weather) {
-    case "Clear":
+export const getWeatherIcon = (weatherIcon) => {
+
+  switch (weatherIcon) {
+    case '01d':
       return "☀";
-    case "Clouds":
+    case '01n':
+      return '🌕';
+
+    case '02d':
+      return "⛅";
+    case '02n':
+      return "☁🌕";
+
+    case '03d':
       return "☁";
-    case "Rain":
+    case '03n':
+      return "☁";
+
+    case "04d":
+      return "☁ ☁";
+    case "04n":
+      return "☁ ☁";
+
+    case "09d":
       return "🌧";
-    case "Thunderstorm":
+    case "09n":
+      return "🌧";
+
+    case "10d":
+      return "🌦";
+    case "10n":
+      return "🌧🌕";
+
+    case "11d":
       return "⛈";
-    case "Snow":
-      return "❄";
-    case "Mist":
+    case "11n":
+      return "⛈";
+
+    case "13d":
+      return "🌨";
+    case "13n":
+      return "🌨";
+
+    case "50d":
+      return "🌫";
+    case "50n":
       return "🌫";
     default:
-      return "☁";
+      return "";
   }
 };
 
@@ -87,7 +123,7 @@ export const getDayDateName = (date) => {
 
   return (
     ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"][
-      date.getDay()
+    date.getDay()
     ] +
     " " +
     date.getDate()

@@ -14,6 +14,7 @@ function Current({
   feelsLike = 284,
   date,
   place = "Cargando",
+  weatherIcon  = '01d',
   weatherName = "Clouds",
 }) {
   return (
@@ -21,7 +22,7 @@ function Current({
       <Text style={styles.dateStyle}>{getDayDateName(date)}</Text>
       <Text style={[styles.weatherText, { textAlign: "center" }]}>{place}</Text>
       <View style={{ flexDirection: "row" }}>
-        <Text style={styles.weatherIcon}>{getWeatherIcon(weatherName)}</Text>
+        <Text style={styles.weatherIcon}>{getWeatherIcon(weatherIcon)}</Text>
         <View>
           <Text style={styles.tempText}>{kelvinToCelsius(temp)}°</Text>
           <Text style={styles.weatherText}>
@@ -35,6 +36,7 @@ function Current({
 }
 
 function CurrentWeatherCard({ current, place, isLoading }) {
+  const weatherIcon = current.weather ? current.weather[0].icon : "01d";
   const weatherName = current.weather ? current.weather[0].main : "Clouds";
   return (
     <View style={styles.container}>
@@ -44,6 +46,7 @@ function CurrentWeatherCard({ current, place, isLoading }) {
         date={new Date(current.dt * 1000)}
         place={place}
         feelsLike={current.feels_like}
+        weatherIcon={weatherIcon}
         weatherName={weatherName}
       />
     </View>

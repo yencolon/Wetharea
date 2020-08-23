@@ -14,6 +14,7 @@ function RowDetail({ title, icon, value }) {
   );
 }
 export default function WeatherDetails({
+  timezoneOffset,
   sunriseTime,
   sunsetTime,
   pressure,
@@ -32,12 +33,12 @@ export default function WeatherDetails({
         <Fragment>
           <RowDetail
             title="Atardecer"
-            value={getHoursToday(sunsetTime)}
+            value={getHoursToday(sunsetTime, timezoneOffset)}
             icon="🌇"
           />
           <RowDetail
             title="Amanecer"
-            value={getHoursToday(sunriseTime)}
+            value={getHoursToday(sunriseTime, timezoneOffset)}
             icon="🌅"
           />
           <RowDetail title="Humedad" value={humidity + "%"} icon="💧" />

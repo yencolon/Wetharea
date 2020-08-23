@@ -10,6 +10,7 @@ import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
 export default class HourlyCard extends PureComponent {
   render() {
     const { dt, temp, humidity, weather } = this.props.weather;
+    const timezoneOffset =  this.props.timezoneOffset;
     const { isLoading } = this.props;
     return (
       <View style={styles.card}>
@@ -21,11 +22,11 @@ export default class HourlyCard extends PureComponent {
           <Fragment>
             <Text style={[styles.cardText, { fontWeight: "bold" }]}>
               {" "}
-              {getHoursToday(dt)}{" "}
+              {getHoursToday(dt, timezoneOffset)}{" "}
             </Text>
             <Text style={[styles.cardText, { fontSize: 30 }]}>
               {" "}
-              {getWeatherIcon(weather[0].main)}{" "}
+              {getWeatherIcon(weather[0].icon)}{" "}
             </Text>
             <Text
               style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}
