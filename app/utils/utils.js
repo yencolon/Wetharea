@@ -70,49 +70,49 @@ export const getWeatherIcon = (weatherIcon) => {
 
   switch (weatherIcon) {
     case '01d':
-      return "☀";
+      return  {icon1: "☀", icon2: ''};
     case '01n':
-      return '🌕';
+      return {icon1: '🌕', icon2: ''};
 
     case '02d':
-      return "⛅";
+      return {icon1: "⛅", icon2: ''};
     case '02n':
-      return "☁🌕";
+      return {icon1: "🌕", icon2: '☁'};
 
     case '03d':
-      return "☁";
+      return {icon1: "☁", icon2: ''};
     case '03n':
-      return "☁";
+      return {icon1: "☁", icon2: ''};
 
     case "04d":
-      return "☁ ☁";
+      return {icon1: "☁", icon2: '☁'};
     case "04n":
-      return "☁ ☁";
+      return {icon1: "☁", icon2: '☁'};
 
     case "09d":
-      return "🌧";
+      return {icon1: "🌧", icon2: ''};
     case "09n":
-      return "🌧";
+      return {icon1: "🌧", icon2: ''};
 
     case "10d":
-      return "🌦";
+      return {icon1: "🌦", icon2: ''};
     case "10n":
-      return "🌧🌕";
+      return {icon1: "🌕", icon2: '🌧'};
 
     case "11d":
-      return "⛈";
+      return {icon1: "⛈", icon2: ''};
     case "11n":
-      return "⛈";
+      return {icon1: "⛈", icon2: ''};
 
     case "13d":
-      return "🌨";
+      return {icon1: "🌨", icon2: ''};
     case "13n":
-      return "🌨";
+      return {icon1: "🌨", icon2: ''};
 
     case "50d":
-      return "🌫";
+      return {icon1: "🌫", icon2: ''};
     case "50n":
-      return "🌫";
+      return {icon1: "🌫", icon2: ''};
     default:
       return "";
   }

@@ -8,6 +8,7 @@ import {
 
 // Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
+import WeatherIcons from './WeatherIcons'
 
 function Current({
   temp = 284,
@@ -22,7 +23,7 @@ function Current({
       <Text style={styles.dateStyle}>{getDayDateName(date)}</Text>
       <Text style={[styles.weatherText, { textAlign: "center" }]}>{place}</Text>
       <View style={{ flexDirection: "row" }}>
-        <Text style={styles.weatherIcon}>{getWeatherIcon(weatherIcon)}</Text>
+        <WeatherIcons icon1={getWeatherIcon(weatherIcon).icon1} icon2={getWeatherIcon(weatherIcon).icon2} fontIconSize={60}/>
         <View>
           <Text style={styles.tempText}>{kelvinToCelsius(temp)}°</Text>
           <Text style={styles.weatherText}>
@@ -46,8 +47,8 @@ function CurrentWeatherCard({ current, place, isLoading }) {
         date={new Date(current.dt * 1000)}
         place={place}
         feelsLike={current.feels_like}
-        weatherIcon={weatherIcon}
-        weatherName={weatherName}
+        // weatherIcon={weatherIcon}
+        // weatherName={weatherName}
       />
     </View>
   );

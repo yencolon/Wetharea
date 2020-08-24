@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 // Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
+import WeatherIcons from './WeatherIcons'
 
 // Utils
 import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
@@ -24,10 +25,7 @@ export default class HourlyCard extends PureComponent {
               {" "}
               {getHoursToday(dt, timezoneOffset)}{" "}
             </Text>
-            <Text style={[styles.cardText, { fontSize: 30 }]}>
-              {" "}
-              {getWeatherIcon(weather[0].icon)}{" "}
-            </Text>
+            <WeatherIcons icon1={getWeatherIcon(weather[0].icon).icon1} icon2={getWeatherIcon(weather[0].icon).icon2} fontIconSize={30}/>
             <Text
               style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}
             >
@@ -47,12 +45,13 @@ export default class HourlyCard extends PureComponent {
 
 const styles = StyleSheet.create({
   card: {
+    maxWidth: 150,
     minWidth: 120,
     minHeight: 160,
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.22)",
-    paddingVertical: 30,
-    paddingHorizontal: 32,
+    paddingVertical: 35,
+    paddingHorizontal: 20,
     borderRadius: 20,
     // borderBottomWidth: 1,
     // borderRightWidth: 1,
