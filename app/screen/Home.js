@@ -82,7 +82,7 @@ export default class Home extends PureComponent {
         current,
         hourly,
         daily,
-        timezoneOffset
+        timezoneOffset,
       });
     }
   };
@@ -91,7 +91,7 @@ export default class Home extends PureComponent {
     try {
       const { latitude, longitude } = this.state.location.coords;
       const response = await weather.getWeather(latitude, longitude);
-      const { current, hourly, daily , timezone_offset} = await response.json();
+      const { current, hourly, daily, timezone_offset } = await response.json();
       const address = await (
         await searchLoaction.getReverseLocation(latitude, longitude)
       ).json();
@@ -106,8 +106,12 @@ export default class Home extends PureComponent {
       });
 
       localStorage.setAddress(address.display_name);
-      localStorage.setForecast({ current, hourly, daily, timezoneOffset: timezone_offset });
-
+      localStorage.setForecast({
+        current,
+        hourly,
+        daily,
+        timezoneOffset: timezone_offset,
+      });
     } catch (error) {
       console.log(JSON.stringify(error.message));
       this.setState({
@@ -151,19 +155,26 @@ export default class Home extends PureComponent {
             />
           }
         >
-          <ImageBackground source={whichBackground()} style={styles.image}>
+          <ImageBackground
+            source={whichBackground(current.dt, timezoneOffset)}
+            style={styles.image}
+          >
             <Options navigation={this.props.navigation} />
             <CurrentWeatherCard
               current={current}
               place={address}
               isLoading={isLoading}
             />
-            <HourlyWeather hourly={hourly} timezoneOffset={timezoneOffset} isLoading={isLoading} />
+            <HourlyWeather
+              hourly={hourly}
+              timezoneOffset={timezoneOffset}
+              isLoading={isLoading}
+            />
             <View>
               <DailyWeather daily={daily} isLoading={isLoading} />
             </View>
             <WeatherDetails
-              timezoneOffset={timezoneOffset} 
+              timezoneOffset={timezoneOffset}
               wind_speed={current.wind_speed}
               sunriseTime={current.sunrise}
               sunsetTime={current.sunset}
@@ -182,6 +193,7 @@ export default class Home extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#2A2C33",
   },
   image: {
     flex: 1,
