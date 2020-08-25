@@ -47,32 +47,29 @@ const ManageLocations = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const getLocations = async () => {
-      try {
-        const locations = await localStorage.getSavedLocations();
-        if (locations) {
-          setLocations(
-            locations.filter((location) => {
-              return location.name !== currentLocation;
-            })
-          );
-        }
-        const currentAddress = await localStorage.getAddress();
-        if (currentAddress) {
-          setCurrentLocation(currentAddress);
-        }
-        const weather = await localStorage.getForecast();
-        if (weather) {
-          const { current } = weather;
-          setTemperature(current.temp);
-          setIcon(current.weather[0].main);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getLocations();
-  }, [locations]);
+  }, []);
+
+  const getLocations = async () => {
+    try {
+      const currentAddress = await localStorage.getAddress();
+      if (currentAddress) {
+        setCurrentLocation(currentAddress);
+      }
+      const locations = await localStorage.getSavedLocations();
+      if (locations) {
+        setLocations(locations);
+      }
+      const weather = await localStorage.getForecast();
+      if (weather) {
+        const { current } = weather;
+        setTemperature(current.temp);
+        setIcon(current.weather[0].main);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onSelect = async (item) => {
     try {
@@ -93,7 +90,7 @@ const ManageLocations = ({ navigation }) => {
     try {
       let savedLocations = await localStorage.getSavedLocations();
       savedLocations.splice(index, 1);
-      // setLocations(savedLocations);
+      setLocations(savedLocations);
       await localStorage.setSavedLocations(savedLocations);
     } catch (error) {
       console.log(error);
@@ -129,14 +126,17 @@ const ManageLocations = ({ navigation }) => {
       <ScrollView>
         <View style={styles.saveLocations}>
           {locations.map((location, index) => {
-            return (
-              <LocationCard
-                onSelect={() => onSelect(location)}
-                onDelete={() => onDelete(index)}
-                location={location}
-                key={location.id}
-              />
-            );
+            if (location.name !== currentLocation) {
+              return (
+                <LocationCard
+                  onSelect={() => onSelect(location)}
+                  onDelete={() => onDelete(index)}
+                  location={location}
+                  key={location.id}
+                />
+              );
+            }
+            return [];
           })}
         </View>
       </ScrollView>
