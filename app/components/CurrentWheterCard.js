@@ -32,7 +32,7 @@ function Current({
         <View>
           <Text style={styles.tempText}>{kelvinToCelsius(temp)}°</Text>
           <Text style={styles.weatherText}>
-            Feels like {kelvinToCelsius(feelsLike)}°
+            Sensacion {kelvinToCelsius(feelsLike)}°
           </Text>
           <Text style={styles.weatherText}>{weatherName}</Text>
         </View>
