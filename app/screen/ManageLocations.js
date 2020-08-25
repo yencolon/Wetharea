@@ -24,6 +24,7 @@ import { weather } from "../api/index";
 
 // Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
+import WeatherIcons from "../components/WeatherIcons";
 
 function LocationCard({ onSelect, location, onDelete }) {
   return (
@@ -64,7 +65,7 @@ const ManageLocations = ({ navigation }) => {
       if (weather) {
         const { current } = weather;
         setTemperature(current.temp);
-        setIcon(current.weather[0].main);
+        setIcon(current.weather[0].icon);
       }
     } catch (error) {
       console.log(error);
@@ -112,13 +113,19 @@ const ManageLocations = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar style="light" backgroundColor={"#111"} />
       <View style={styles.currentLocation}>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ marginBottom: 5 , flexDirection: "row" }}>
           <SimpleLineIcons name="location-pin" size={28} color="whitesmoke" />
           <Text style={styles.currentLocationText}>{currentLocation}</Text>
         </View>
-        <Text style={{ color: "whitesmoke", fontSize: 28 }}>
-          {getWeatherIcon(icon)} {kelvinToCelsius(temperature)}°
-        </Text>
+        <View style={{ marginTop: 3 , flexDirection: "row" }}>
+          <WeatherIcons
+            icon1={getWeatherIcon(icon).icon1}
+            icon2={getWeatherIcon(icon).icon2}
+          />
+          <Text style={{ color: "whitesmoke", fontSize: 28 }}>
+            {kelvinToCelsius(temperature)}°
+          </Text>
+        </View>
       </View>
       <View style={{ marginBottom: 10 }}>
         <Text style={styles.locationsTitle}>Locaciones Guardadas</Text>
@@ -160,7 +167,8 @@ const styles = StyleSheet.create({
     marginTop: 60,
     marginHorizontal: 20,
     paddingHorizontal: 35,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 20,
   },
   currentLocationText: {
     fontSize: 16,
