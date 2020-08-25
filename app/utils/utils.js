@@ -18,10 +18,6 @@ export const whichBackground = (date_, timezoneOffset) => {
   }
 };
 
-export const kelvinToCelsius = (measure) => {
-  return Number((measure - 273.15).toFixed(1));
-};
-
 export const filterHoursActualDay = (hourly) => {
   if (hourly === undefined) return [];
 
