@@ -109,39 +109,63 @@ export default function SearchLocation({ navigation }) {
 
   const setLocation = async (latitude, longitude) => {
     try {
-      setIsLoading(true);
-      const response = await weather.getWeather(latitude, longitude);
-      const { current, hourly, daily } = await response.json();
-      localStorage.setCoordinates(latitude, longitude);
-      localStorage.setForecast({ current, hourly, daily });
+      if (!(await existLocation(latitude, longitude))) {
+        setIsLoading(true);
 
-      const savedLocations = await localStorage.getSavedLocations();
-      const address = await (
-        await searchLoaction.getReverseLocation(latitude, longitude)
-      ).json();
-      if (!savedLocations) {
-        const newLocation = [
-          {
-            id: `${latitude}+${longitude}`,
-            name: address.display_name,
-            latitude,
-            longitude,
-          },
-        ];
-        localStorage.setSavedLocations(newLocation);
-      } else {
-        let newLocation = savedLocations;
-        newLocation.push({
+        const response = await weather.getWeather(latitude, longitude);
+        const { current, hourly, daily } = await response.json();
+        localStorage.setCoordinates(latitude, longitude);
+        localStorage.setForecast({ current, hourly, daily });
+        addLocation(latitude, longitude);
+
+        setIsLoading(false);
+        navigation.dispatch(StackActions.replace("Home"));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const addLocation = async (latitude, longitude) => {
+    const savedLocations = await localStorage.getSavedLocations();
+    const address = await (
+      await searchLoaction.getReverseLocation(latitude, longitude)
+    ).json();
+    if (!savedLocations) {
+      const newLocation = [
+        {
           id: `${latitude}+${longitude}`,
           name: address.display_name,
           latitude,
           longitude,
-        });
-        localStorage.setSavedLocations(newLocation);
-      }
+        },
+      ];
+      localStorage.setSavedLocations(newLocation);
+    } else {
+      let newLocation = savedLocations;
+      newLocation.push({
+        id: `${latitude}+${longitude}`,
+        name: address.display_name,
+        latitude,
+        longitude,
+      });
+      localStorage.setSavedLocations(newLocation);
+    }
+  };
 
-      setIsLoading(false);
-      navigation.dispatch(StackActions.replace("Home"));
+  const existLocation = async (latitude, longitude) => {
+    try {
+      const savedLocations = await localStorage.getSavedLocations();
+      if (savedLocations) {
+        const exist = savedLocations.find(
+          (location) => location.id === `${latitude}+${longitude}`
+        );
+        if (exist) {
+          alert("Esta locacion ya fue agregada");
+          return true;
+        }
+      }
+      return false;
     } catch (error) {
       console.log(error);
     }
