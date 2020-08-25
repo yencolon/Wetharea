@@ -42,11 +42,11 @@ export default function WeatherDetails({
             icon="🌅"
           />
           <RowDetail title="Humedad" value={humidity + "%"} icon="💧" />
-          <RowDetail title="Presion" value={pressure + " atm"} icon="🌡" />
+          <RowDetail title="Presion" value={pressure + " hPa"} icon="🌡" />
           <RowDetail title="Indice UV" value={getUVIndex(uvi)} icon="🔅" />
           <RowDetail
             title="Velocidad del viento"
-            value={wind_speed + " km/h"}
+            value={wind_speed + " m/s"}
             icon="💨"
           />
         </Fragment>
