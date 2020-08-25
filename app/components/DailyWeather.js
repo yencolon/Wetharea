@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, Text } from "react-native";
 
 // Components
 import DailyRow from "./DailyRow";
@@ -16,6 +16,7 @@ export default class DailyWeather extends Component {
       <View style={styles.container}>
         {isLoading ? (
           <View style={styles.loading}>
+            <Text style={{color: 'whitesmoke', marginRight: 2,}}>Actualizando</Text>
             <ActivityIndicatorApp />
           </View>
         ) : (
@@ -44,6 +45,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   loading: {
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
   },
   separator: {

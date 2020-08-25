@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 // Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
-import WeatherIcons from './WeatherIcons'
+import WeatherIcons from "./WeatherIcons";
 
 // Utils
 import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
@@ -11,33 +11,34 @@ import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
 export default class HourlyCard extends PureComponent {
   render() {
     const { dt, temp, humidity, weather } = this.props.weather;
-    const timezoneOffset =  this.props.timezoneOffset;
+    const timezoneOffset = this.props.timezoneOffset;
     const { isLoading } = this.props;
     return (
       <View style={styles.card}>
-        {isLoading ? (
-          <View style={styles.loading}>
-            <ActivityIndicatorApp />
-          </View>
-        ) : (
-          <Fragment>
-            <Text style={[styles.cardText, { fontWeight: "bold" }]}>
-              {" "}
-              {getHoursToday(dt, timezoneOffset)}{" "}
-            </Text>
-            <WeatherIcons icon1={getWeatherIcon(weather[0].icon).icon1} icon2={getWeatherIcon(weather[0].icon).icon2} fontIconSize={30}/>
-            <Text
-              style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}
-            >
-              💧{humidity}%
-            </Text>
-            <Text
-              style={[styles.cardText, { fontWeight: "700", marginLeft: 15 }]}
-            >
-              {kelvinToCelsius(temp)}°{" "}
-            </Text>
-          </Fragment>
-        )}
+        <Fragment>
+          {isLoading && (
+            <View style={styles.loading}>
+              <ActivityIndicatorApp />
+            </View>
+          )}
+          <Text style={[styles.cardText, { fontWeight: "bold" }]}>
+            {" "}
+            {getHoursToday(dt, timezoneOffset)}{" "}
+          </Text>
+          <WeatherIcons
+            icon1={weather ? getWeatherIcon(weather[0].icon).icon1 : ''}
+            icon2={weather ? getWeatherIcon(weather[0].icon).icon2 : ''}
+            fontIconSize={30}
+          />
+          <Text style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}>
+            💧{humidity}%
+          </Text>
+          <Text
+            style={[styles.cardText, { fontWeight: "700", marginLeft: 15 }]}
+          >
+            {kelvinToCelsius(temp)}°{" "}
+          </Text>
+        </Fragment>
       </View>
     );
   }
