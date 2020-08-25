@@ -102,8 +102,8 @@ export default function SearchLocation({ navigation }) {
     if (status !== "granted") {
       alert("El permiso para accesar a la locacion fue denegado");
     }
+    setIsLoading(true);
     const location = await Location.getCurrentPositionAsync({});
-
     setLocation(location.coords.latitude, location.coords.longitude);
   };
 
@@ -121,6 +121,7 @@ export default function SearchLocation({ navigation }) {
         setIsLoading(false);
         navigation.dispatch(StackActions.replace("Home"));
       }
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -155,10 +156,15 @@ export default function SearchLocation({ navigation }) {
 
   const existLocation = async (latitude, longitude) => {
     try {
+      const address = await (
+        await searchLoaction.getReverseLocation(latitude, longitude)
+      ).json();
       const savedLocations = await localStorage.getSavedLocations();
       if (savedLocations) {
         const exist = savedLocations.find(
-          (location) => location.id === `${latitude}+${longitude}`
+          (location) =>
+            location.id === `${latitude}+${longitude}` ||
+            location.name === address.display_name
         );
         if (exist) {
           alert("Esta locacion ya fue agregada");
