@@ -121,6 +121,7 @@ const ManageLocations = ({ navigation }) => {
           <WeatherIcons
             icon1={getWeatherIcon(icon).icon1}
             icon2={getWeatherIcon(icon).icon2}
+            fontIconSize={35}
           />
           <Text style={{ color: "whitesmoke", fontSize: 28 }}>
             {temperature}°
