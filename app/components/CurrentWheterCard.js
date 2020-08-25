@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import {
-  kelvinToCelsius,
   getDayDateName,
   getWeatherIcon,
 } from "../utils/utils";
@@ -30,9 +29,9 @@ function Current({
           isCurrent={true}
         />
         <View>
-          <Text style={styles.tempText}>{kelvinToCelsius(temp)}°</Text>
+          <Text style={styles.tempText}>{temp}°</Text>
           <Text style={styles.weatherText}>
-            Sensacion {kelvinToCelsius(feelsLike)}°
+            Sensacion {feelsLike}°
           </Text>
           <Text style={styles.weatherText}>{weatherName}</Text>
         </View>

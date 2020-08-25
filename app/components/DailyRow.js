@@ -5,7 +5,6 @@ import { StyleSheet, Text, View } from "react-native";
 import {
   getWeatherIcon,
   getDayDateName,
-  kelvinToCelsius,
 } from "../utils/utils";
 
 export default function DailyRow(props) {
@@ -24,7 +23,7 @@ export default function DailyRow(props) {
         </Text>
       </View>
       <Text style={styles.text}>
-        {kelvinToCelsius(temp.min)}°/ {kelvinToCelsius(temp.max)}°
+        {temp.min}°/ {temp.max}°
       </Text>
     </View>
   );

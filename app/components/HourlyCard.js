@@ -6,7 +6,7 @@ import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 import WeatherIcons from "./WeatherIcons";
 
 // Utils
-import { getHoursToday, getWeatherIcon, kelvinToCelsius } from "../utils/utils";
+import { getHoursToday, getWeatherIcon } from "../utils/utils";
 
 export default class HourlyCard extends PureComponent {
   render() {
@@ -36,7 +36,7 @@ export default class HourlyCard extends PureComponent {
           <Text
             style={[styles.cardText, { fontWeight: "700", marginLeft: 15 }]}
           >
-            {kelvinToCelsius(temp)}°{" "}
+            {temp}°{" "}
           </Text>
         </Fragment>
       </View>

@@ -17,7 +17,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { localStorage } from "../storage/localStorage";
 
 // Utils
-import { kelvinToCelsius, getWeatherIcon } from "../utils/utils";
+import { getWeatherIcon } from "../utils/utils";
 
 // API fetch
 import { weather } from "../api/index";
@@ -123,7 +123,7 @@ const ManageLocations = ({ navigation }) => {
             icon2={getWeatherIcon(icon).icon2}
           />
           <Text style={{ color: "whitesmoke", fontSize: 28 }}>
-            {kelvinToCelsius(temperature)}°
+            {temperature}°
           </Text>
         </View>
       </View>
