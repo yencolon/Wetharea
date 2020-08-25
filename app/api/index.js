@@ -3,7 +3,7 @@ import { API_URL, API_KEY, API_GEOCODING, API_REVERSE_GEOCODING } from "./env";
 export const weather = {
   async getWeather(lat, long) {
     return await fetch(
-      `${API_URL}lat=${lat}&lon=${long}&
+      `${API_URL}lat=${lat}&lon=${long}&lang=es&
       exclude=current,daily&appid=${API_KEY}`
     );
   },
