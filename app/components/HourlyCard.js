@@ -25,11 +25,7 @@ export default class HourlyCard extends PureComponent {
             {" "}
             {getHoursToday(dt, timezoneOffset)}{" "}
           </Text>
-          <WeatherIcons
-            icon1={weather ? getWeatherIcon(weather[0].icon).icon1 : ''}
-            icon2={weather ? getWeatherIcon(weather[0].icon).icon2 : ''}
-            fontIconSize={30}
-          />
+          <WeatherIcons icon={weather[0].icon} size={50} />
           <Text style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}>
             💧{humidity}%
           </Text>

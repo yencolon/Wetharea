@@ -42,57 +42,6 @@ export const getUVIndex = (uvIndex) => {
   return "Ext. Alto 🟣";
 };
 
-//Envia el main del objeto weather retorna un simbolo.
-export const getWeatherIcon = (weatherIcon) => {
-  switch (weatherIcon) {
-    case "01d":
-      return { icon1: "☀", icon2: "" };
-    case "01n":
-      return { icon1: "🌕", icon2: "" };
-
-    case "02d":
-      return { icon1: "⛅", icon2: "" };
-    case "02n":
-      return { icon1: "🌕", icon2: "☁" };
-
-    case "03d":
-      return { icon1: "☁", icon2: "" };
-    case "03n":
-      return { icon1: "☁", icon2: "" };
-
-    case "04d":
-      return { icon1: "☁", icon2: "☁" };
-    case "04n":
-      return { icon1: "☁", icon2: "☁" };
-
-    case "09d":
-      return { icon1: "🌧", icon2: "" };
-    case "09n":
-      return { icon1: "🌧", icon2: "" };
-
-    case "10d":
-      return { icon1: "🌦", icon2: "" };
-    case "10n":
-      return { icon1: "🌕", icon2: "🌧" };
-
-    case "11d":
-      return { icon1: "⛈", icon2: "" };
-    case "11n":
-      return { icon1: "⛈", icon2: "" };
-
-    case "13d":
-      return { icon1: "🌨", icon2: "" };
-    case "13n":
-      return { icon1: "🌨", icon2: "" };
-
-    case "50d":
-      return { icon1: "🌫", icon2: "" };
-    case "50n":
-      return { icon1: "🌫", icon2: "" };
-    default:
-      return "";
-  }
-};
 
 export const getDayDateName = (date) => {
   if (isNaN(date)) return "Cargando";

@@ -118,11 +118,7 @@ const ManageLocations = ({ navigation }) => {
           <Text style={styles.currentLocationText}>{currentLocation}</Text>
         </View>
         <View style={{ marginTop: 3 , flexDirection: "row" }}>
-          <WeatherIcons
-            icon1={getWeatherIcon(icon).icon1}
-            icon2={getWeatherIcon(icon).icon2}
-            fontIconSize={35}
-          />
+          <WeatherIcons icon={icon}/>
           <Text style={{ color: "whitesmoke", fontSize: 28 }}>
             {temperature}°
           </Text>

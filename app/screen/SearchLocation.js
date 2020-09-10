@@ -203,7 +203,7 @@ export default function SearchLocation({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar style="light" translucent={true} />
-      <View style={styles.input}>
+      <View style={styles.searchBar}>
         <AntDesign name="search1" size={20} color="gray" />
         <TextInput
           style={styles.textInputStyle}
@@ -240,8 +240,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2A2C33",
   },
-  input: {
-    backgroundColor: "white",
+  searchBar: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     flexDirection: "row",
     marginHorizontal: 10,
     padding: 8,

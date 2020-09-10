@@ -21,13 +21,8 @@ function Current({
     <Fragment>
       <Text style={styles.dateStyle}>{getDayDateName(date)}</Text>
       <Text style={[styles.weatherText, { textAlign: "center" }]}>{place}</Text>
-      <View style={{ flexDirection: "row" }}>
-        <WeatherIcons
-          icon1={getWeatherIcon(weatherIcon).icon1}
-          icon2={getWeatherIcon(weatherIcon).icon2}
-          fontIconSize={65}
-          isCurrent={true}
-        />
+      <View style={styles.row}>
+        <WeatherIcons icon={weatherIcon} />
         <View>
           <Text style={styles.tempText}>{temp}°</Text>
           <Text style={styles.weatherText}>
@@ -83,4 +78,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#fff",
   },
+  row: { 
+    flexDirection: "row" 
+  }
 });

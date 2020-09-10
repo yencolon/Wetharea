@@ -19,13 +19,13 @@ import Options from "../components/Options";
 import CurrentWeatherCard from "../components/CurrentWheterCard";
 import HourlyWeather from "../components/HourlyWeather";
 import DailyWeather from "../components/DailyWeather";
+import WeatherDetails from "../components/WeatherDetails";
 
 // LocalStorage
 import { localStorage } from "../storage/localStorage";
 
 // Utils
 import { whichBackground } from "../utils/utils";
-import WeatherDetails from "../components/WeatherDetails";
 
 export default class Home extends PureComponent {
   constructor(props) {
@@ -84,6 +84,7 @@ export default class Home extends PureComponent {
         daily,
         timezoneOffset,
       });
+
     }
   };
 
@@ -144,35 +145,43 @@ export default class Home extends PureComponent {
       refreshing,
     } = this.state;
     return (
-      <View style={styles.container}>
-        <StatusBar style="light" translucent={true} />
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={this.onRefresh}
-            />
-          }
-        >
-          <ImageBackground
-            source={whichBackground(current.dt, timezoneOffset)}
-            style={styles.image}
+
+      <ImageBackground
+        source={whichBackground(current.dt, timezoneOffset)}
+        style={styles.image}
+        imageStyle={{ resizeMode: 'cover', maxHeight: 900 }}
+      >
+
+        <View style={styles.container}>
+          <StatusBar style="light" translucent={true} />
+
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1 }}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
           >
+
             <Options navigation={this.props.navigation} />
             <CurrentWeatherCard
               current={current}
               place={address}
               isLoading={isLoading}
             />
+
             <HourlyWeather
               hourly={hourly}
               timezoneOffset={timezoneOffset}
               isLoading={isLoading}
             />
+
             <View>
               <DailyWeather daily={daily} isLoading={isLoading} />
             </View>
+
             <WeatherDetails
               timezoneOffset={timezoneOffset}
               wind_speed={current.wind_speed}
@@ -183,9 +192,10 @@ export default class Home extends PureComponent {
               humidity={current.humidity}
               isLoading={isLoading}
             />
-          </ImageBackground>
-        </ScrollView>
-      </View>
+          </ScrollView>
+        </View>
+      </ImageBackground>
+
     );
   }
 }
@@ -193,12 +203,10 @@ export default class Home extends PureComponent {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2A2C33",
   },
   image: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
-    resizeMode: "cover",
     flexDirection: "column",
     justifyContent: "space-around",
   },
