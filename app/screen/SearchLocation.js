@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 5,
     paddingVertical: 1,
+    color: 'white'
   },
   separator: {
     backgroundColor: "rgba(255,255,255,0.22)",

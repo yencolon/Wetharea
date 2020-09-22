@@ -178,9 +178,7 @@ export default class Home extends PureComponent {
               isLoading={isLoading}
             />
 
-            <View>
-              <DailyWeather daily={daily} isLoading={isLoading} />
-            </View>
+            <DailyWeather daily={daily} isLoading={isLoading} />
 
             <WeatherDetails
               timezoneOffset={timezoneOffset}

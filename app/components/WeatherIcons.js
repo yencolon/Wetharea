@@ -98,8 +98,8 @@ const SunIcon = (props) => {
 
 const MoonIcon = (props) => {
   return (
-    <Svg width={25.658} height={25.283} viewBox="0 0 25.658 25.283" {...props}>
-      <G transform="translate(78.227 -51.352)">
+    <Svg width={17.979} height={17.783} viewBox="0 0 4.757 4.705" {...props}>
+      <G transform="matrix(.1854 0 0 .1861 14.503 -9.556)">
         <Ellipse
           cx={-65.398}
           cy={63.993}
