@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import { StyleSheet, Text, View } from "react-native";
+
+// Utils
 import { getHoursToday, getUVIndex } from "../utils/utils";
 
 // Components
@@ -28,7 +30,9 @@ export default function WeatherDetails({
       <Fragment>
         {isLoading && (
           <View style={styles.loading}>
-            <Text style={{color: 'whitesmoke', marginRight: 2,}}>Actualizando</Text>
+            <Text style={{ color: "whitesmoke", marginRight: 2 }}>
+              Actualizando
+            </Text>
             <ActivityIndicatorApp />
           </View>
         )}

@@ -16,7 +16,9 @@ export default class DailyWeather extends Component {
       <View style={styles.container}>
         {isLoading ? (
           <View style={styles.loading}>
-            <Text style={{color: 'whitesmoke', marginRight: 2,}}>Actualizando</Text>
+            <Text style={{ color: "whitesmoke", marginRight: 2 }}>
+              Actualizando
+            </Text>
             <ActivityIndicatorApp />
           </View>
         ) : (

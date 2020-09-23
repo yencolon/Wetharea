@@ -2,8 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 // Expo imports
-import { Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { Entypo, AntDesign } from "@expo/vector-icons";
 
 const Options = ({ navigation }) => {
   const addNewLocation = () => {

@@ -9,7 +9,11 @@ import { filterHoursActualDay } from "../utils/utils";
 
 export default class HourlyWeather extends Component {
   renderItem = ({ item }) => (
-    <HourlyCard weather={item} isLoading={this.props.isLoading} timezoneOffset={this.props.timezoneOffset}/>
+    <HourlyCard
+      weather={item}
+      isLoading={this.props.isLoading}
+      timezoneOffset={this.props.timezoneOffset}
+    />
   );
 
   render() {

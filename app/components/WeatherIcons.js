@@ -1,74 +1,71 @@
-import React from 'react'
-import Svg, { Path, G, Ellipse, Circle } from "react-native-svg"
-import { StyleSheet, View } from 'react-native'
+import React from "react";
+import Svg, { Path, G, Ellipse, Circle } from "react-native-svg";
+import { StyleSheet, View } from "react-native";
 
 const WeatherIcons = ({ icon, size }) => {
-
   //Envia el main del objeto weather retorna un simbolo.
   const getWeatherIcon = (weatherIcon, size = 80) => {
     switch (weatherIcon) {
       case "01d":
-        return <SunIcon width={size} height={size} />
+        return <SunIcon width={size} height={size} />;
       case "01n":
-        return <MoonIcon width={size} height={size} />
+        return <MoonIcon width={size} height={size} />;
       case "02d":
-        return <CloudsDay width={size} height={size} />
+        return <CloudsDay width={size} height={size} />;
       case "02n":
-        return <CloudsNight width={size} height={size} />
+        return <CloudsNight width={size} height={size} />;
 
       case "03d":
-        return <Clouds width={size} height={size} />
+        return <Clouds width={size} height={size} />;
       case "03n":
-        return <Clouds width={size} height={size} />
+        return <Clouds width={size} height={size} />;
 
       case "04d":
-        return <ScatteredClouds width={size} height={size} />
+        return <ScatteredClouds width={size} height={size} />;
       case "04n":
-        return <ScatteredClouds width={size} height={size} />
+        return <ScatteredClouds width={size} height={size} />;
 
       case "09d":
-        return <RainIcon width={size} height={size} />
+        return <RainIcon width={size} height={size} />;
       case "09n":
-        return <RainIcon width={size} height={size} />
+        return <RainIcon width={size} height={size} />;
 
       case "10d":
-        return <RainSun width={size} height={size} />
+        return <RainSun width={size} height={size} />;
       case "10n":
-        return <RainMoon width={size} height={size} />
+        return <RainMoon width={size} height={size} />;
 
       case "11d":
-        return <ThunderIcon width={size} height={size} />
+        return <ThunderIcon width={size} height={size} />;
       case "11n":
-        return <ThunderIcon width={size} height={size} />
+        return <ThunderIcon width={size} height={size} />;
 
       case "13d":
-        return <SnowIcon width={size} height={size} />
+        return <SnowIcon width={size} height={size} />;
       case "13n":
-        return <SnowIcon width={size} height={size} />
+        return <SnowIcon width={size} height={size} />;
 
       case "50d":
-        return <FogIcon width={size} height={size} />
+        return <FogIcon width={size} height={size} />;
       case "50n":
-        return <FogIcon width={size} height={size} />
+        return <FogIcon width={size} height={size} />;
       default:
-        return <View></View>
+        return <View></View>;
     }
-  }
+  };
   return (
-    <View style={styles.currentContainer}>
-      {getWeatherIcon(icon, size)}
-    </View>
-  )
-}
+    <View style={styles.currentContainer}>{getWeatherIcon(icon, size)}</View>
+  );
+};
 
-export default WeatherIcons
+export default WeatherIcons;
 
 const styles = StyleSheet.create({
   currentContainer: {
-    justifyContent: 'center',
-    alignContent: 'center',
-  }
-})
+    justifyContent: "center",
+    alignContent: "center",
+  },
+});
 
 const ThunderIcon = (props) => {
   return (
@@ -82,8 +79,8 @@ const ThunderIcon = (props) => {
         d="M27.565 24.904h-3.763l1.629-6.394-8.2 8.375h3.763l-1.627 6.394z"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const SunIcon = (props) => {
   return (
@@ -93,8 +90,8 @@ const SunIcon = (props) => {
         fill="#f5d76e"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const MoonIcon = (props) => {
   return (
@@ -115,9 +112,8 @@ const MoonIcon = (props) => {
         <Circle r={1.055} cy={63.904} cx={-72.772} fill="#4d4d4d" />
       </G>
     </Svg>
-  )
-}
-
+  );
+};
 
 const FogIcon = (props) => {
   return (
@@ -130,8 +126,8 @@ const FogIcon = (props) => {
         <Path d="M27.05 16.166a6.09 6.09 0 00-6.092-6.09V11.9A4.264 4.264 0 0121 20.427H1.97v1.843H21c3.343-.021 6.05-2.753 6.05-6.104zM21.669 30.994c0 3.363-2.73 6.09-6.092 6.09V35.26a4.264 4.264 0 00.041-8.53H1.971V24.89h13.647c3.343.021 6.05 2.753 6.05 6.104z" />
       </G>
     </Svg>
-  )
-}
+  );
+};
 
 const SnowIcon = (props) => {
   return (
@@ -141,8 +137,8 @@ const SnowIcon = (props) => {
         fill="#fff"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const RainIcon = (props) => {
   return (
@@ -160,8 +156,8 @@ const RainIcon = (props) => {
         fill="#ccf1fe"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const CloudsNight = (props) => {
   return (
@@ -194,8 +190,8 @@ const CloudsNight = (props) => {
         fill="#fff"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const CloudsDay = (props) => {
   return (
@@ -209,9 +205,8 @@ const CloudsDay = (props) => {
         fill="#fff"
       />
     </Svg>
-  )
-}
-
+  );
+};
 
 const Clouds = (props) => {
   return (
@@ -221,8 +216,8 @@ const Clouds = (props) => {
         fill="#fff"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const ScatteredClouds = (props) => {
   return (
@@ -236,8 +231,8 @@ const ScatteredClouds = (props) => {
         fill="#fff"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const RainSun = (props) => {
   return (
@@ -255,8 +250,8 @@ const RainSun = (props) => {
         fill="#ccf1fe"
       />
     </Svg>
-  )
-}
+  );
+};
 
 const RainMoon = (props) => {
   return (
@@ -293,5 +288,5 @@ const RainMoon = (props) => {
         fill="#ccf1fe"
       />
     </Svg>
-  )
-}
+  );
+};

@@ -11,7 +11,7 @@ export const whichBackground = (date_, timezoneOffset) => {
     return require("../assets/img/noon-bg.jpg");
   }
   if (
-    (time.getHours() >= 19 && time.getHours() < 23) ||
+    (time.getHours() >= 19 && time.getHours() <= 23) ||
     (time.getHours() >= 0 && time.getHours() < 4)
   ) {
     return require("../assets/img/night-bg.jpg");
@@ -41,7 +41,6 @@ export const getUVIndex = (uvIndex) => {
 
   return "Ext. Alto 🟣";
 };
-
 
 export const getDayDateName = (date) => {
   if (isNaN(date)) return "Cargando";

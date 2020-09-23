@@ -6,10 +6,9 @@ import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 import WeatherIcons from "./WeatherIcons";
 
 // Utils
-import { getHoursToday, getWeatherIcon } from "../utils/utils";
+import { getHoursToday } from "../utils/utils";
 
 export default class HourlyCard extends PureComponent {
-  
   render() {
     const { dt, temp, humidity, weather } = this.props.weather;
     const timezoneOffset = this.props.timezoneOffset;
@@ -23,10 +22,11 @@ export default class HourlyCard extends PureComponent {
             </View>
           )}
           <Text style={[styles.cardText, { fontWeight: "bold" }]}>
-            {" "}
-            {getHoursToday(dt, timezoneOffset)}{" "}
+            {dt && timezoneOffset
+              ? getHoursToday(dt, timezoneOffset)
+              : getHoursToday(0, 0)}
           </Text>
-          <WeatherIcons icon={weather? weather[0].icon : '01d'} size={50} />
+          <WeatherIcons icon={weather ? weather[0].icon : "01d"} size={50} />
           <Text style={[styles.cardText, { fontSize: 15, fontWeight: "100" }]}>
             💧{humidity}%
           </Text>

@@ -6,18 +6,14 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { StackActions } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 
 // Expo imports
 import { StatusBar } from "expo-status-bar";
-import { SimpleLineIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { SimpleLineIcons, AntDesign } from "@expo/vector-icons";
 
 // LocalStorgae
 import { localStorage } from "../storage/localStorage";
-
-// Utils
-import { getWeatherIcon } from "../utils/utils";
 
 // API fetch
 import { weather } from "../api/index";
@@ -51,6 +47,15 @@ const ManageLocations = ({ navigation }) => {
     getLocations();
   }, []);
 
+  const newNavigate = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "Home" }],
+      })
+    );
+  };
+
   const getLocations = async () => {
     try {
       const currentAddress = await localStorage.getAddress();
@@ -80,7 +85,7 @@ const ManageLocations = ({ navigation }) => {
       localStorage.setCoordinates(item.latitude, item.longitude);
       localStorage.setForecast({ current, hourly, daily });
       setIsLoading(false);
-      navigation.dispatch(StackActions.replace("Home"));
+      newNavigate();
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -113,12 +118,12 @@ const ManageLocations = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar style="light" backgroundColor={"#111"} />
       <View style={styles.currentLocation}>
-        <View style={{ marginBottom: 5 , flexDirection: "row" }}>
+        <View style={{ marginBottom: 5, flexDirection: "row" }}>
           <SimpleLineIcons name="location-pin" size={28} color="whitesmoke" />
           <Text style={styles.currentLocationText}>{currentLocation}</Text>
         </View>
-        <View style={{ marginTop: 3 , flexDirection: "row" }}>
-          <WeatherIcons icon={icon}/>
+        <View style={{ marginTop: 3, flexDirection: "row" }}>
+          <WeatherIcons icon={icon} />
           <Text style={{ color: "whitesmoke", fontSize: 28 }}>
             {temperature}°
           </Text>

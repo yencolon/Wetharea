@@ -84,7 +84,6 @@ export default class Home extends PureComponent {
         daily,
         timezoneOffset,
       });
-
     }
   };
 
@@ -145,13 +144,11 @@ export default class Home extends PureComponent {
       refreshing,
     } = this.state;
     return (
-
       <ImageBackground
         source={whichBackground(current.dt, timezoneOffset)}
         style={styles.image}
-        imageStyle={{ resizeMode: 'cover', maxHeight: 900 }}
+        imageStyle={{ resizeMode: "cover", maxHeight: 900 }}
       >
-
         <View style={styles.container}>
           <StatusBar style="light" translucent={true} />
 
@@ -164,7 +161,6 @@ export default class Home extends PureComponent {
               />
             }
           >
-
             <Options navigation={this.props.navigation} />
             <CurrentWeatherCard
               current={current}
@@ -193,7 +189,6 @@ export default class Home extends PureComponent {
           </ScrollView>
         </View>
       </ImageBackground>
-
     );
   }
 }
@@ -207,6 +202,7 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     flexDirection: "column",
     justifyContent: "space-around",
+    backgroundColor: "#2A2C33",
   },
   titleContainer: {
     flex: 1,

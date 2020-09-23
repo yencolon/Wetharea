@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, TextInput, FlatList, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { StackActions } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import * as Location from "expo-location";
 
 // Expo imports
@@ -97,6 +97,15 @@ export default function SearchLocation({ navigation }) {
     searchApi();
   }, [search]);
 
+  const newNavigate = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "Home" }],
+      })
+    );
+  };
+
   const getLocation = async () => {
     const { status } = await Location.requestPermissionsAsync();
     if (status !== "granted") {
@@ -119,7 +128,7 @@ export default function SearchLocation({ navigation }) {
         addLocation(latitude, longitude);
 
         setIsLoading(false);
-        navigation.dispatch(StackActions.replace("Home"));
+        newNavigate();
       }
       setIsLoading(false);
     } catch (error) {
@@ -241,7 +250,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#2A2C33",
   },
   searchBar: {
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
     flexDirection: "row",
     marginHorizontal: 10,
     padding: 8,
@@ -253,7 +262,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 5,
     paddingVertical: 1,
-    color: 'white'
+    color: "white",
   },
   separator: {
     backgroundColor: "rgba(255,255,255,0.22)",

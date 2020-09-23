@@ -1,21 +1,20 @@
 import React, { Fragment } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import {
-  getDayDateName,
-  getWeatherIcon,
-} from "../utils/utils";
+
+// Utils
+import { getDayDateName } from "../utils/utils";
 
 // Components
 import ActivityIndicatorApp from "../components/ActivityIndicatorApp";
 import WeatherIcons from "./WeatherIcons";
 
 function Current({
-  temp = 284,
-  feelsLike = 284,
+  temp = 0,
+  feelsLike = 0,
   date,
   place = "Cargando",
   weatherIcon = "01d",
-  weatherName = "Clouds",
+  weatherName = "Cargando",
 }) {
   return (
     <Fragment>
@@ -25,9 +24,7 @@ function Current({
         <WeatherIcons icon={weatherIcon} />
         <View>
           <Text style={styles.tempText}>{temp}°</Text>
-          <Text style={styles.weatherText}>
-            Sensacion {feelsLike}°
-          </Text>
+          <Text style={styles.weatherText}>Sensacion {feelsLike}°</Text>
           <Text style={styles.weatherText}>{weatherName}</Text>
         </View>
       </View>
@@ -78,7 +75,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#fff",
   },
-  row: { 
-    flexDirection: "row" 
-  }
+  row: {
+    flexDirection: "row",
+  },
 });
